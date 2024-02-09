@@ -1,0 +1,17 @@
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
+  <ng-container *ngFor="let location of locations; let i = index">
+    <agm-marker [latitude]="location.coordinates[1]" [longitude]="location.coordinates[0]" (markerClick)="onMarkerClick(i)">
+      <agm-info-window [isOpen]="markerSelectIndex === i">
+        <div class="text-top  py-2"> {{location.name ? location.name : "NA"}}</div>
+          <div *ngIf="location.fieldName" class="text formal-site py-2"> <a class="no-btn">{{location.field ? location.field  : 0 }} </a> {{location.fieldName}} </div>
+          <div *ngIf="!location.fieldName" class="text formal-site py-2">{{location.field }} </div>
+          <div *ngIf="location.route" class="view-bot px-5 py-2">
+            <button type="button" class="btn view-btn px-4" (click)="navigateTo(location.route,location.id)">View</button>
+          </div>
+          <div class="view-bot px-5 py-2" *ngIf="!location.route">
+            <button type="button" class="btn view-btn px-4" (click)="onMarkerClick(null)">Close</button>
+          </div>
+       </agm-info-window>
+    </agm-marker>
+  </ng-container>
+</agm-map>

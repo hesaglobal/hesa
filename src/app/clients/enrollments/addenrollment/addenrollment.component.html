@@ -1,0 +1,142 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Enrollments</div>
+    <div class="ps-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 p-0">
+          <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+                class="bx bx-home-alt text-primary"></i></a>
+          </li>
+  
+          <li class="breadcrumb-item active" aria-current="page">{{mode}} Enrollment</li>
+        </ol>
+  
+      </nav>
+    </div>
+    <div class="ms-auto">
+      <button (click)="viewEnrollments()" class="btn btn-primary px-5 text-white"><i class="bx bx-hive mr-1"></i>View
+        Enrollments</button>
+    </div>
+  
+  </div>
+  
+  <div class="row">
+    <div class="col">
+      <div class="tab-content" id="danger-pills-tabContent">
+  
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+  
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+              <div class="card-title d-flex align-items-center">
+                <div><i class="bx bxs-user me-1 font-22 text-primary"></i> </div>
+                <h5 class="mb-0 text-primary">{{(mode == 'Add')? ' Add Enrollment' :
+                  'Edit Enrollment'}} </h5>
+              </div>
+  
+              <form class="row g-3" [formGroup]="addEnrollmentForm" (submit)="onSubmit()">
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="name" class="form-label">Name*</label>
+                  <div class="input-group">
+                    <input type="text" maxlength="30" class="form-control" placeholder="Name"
+                      formControlName="name" />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Name is required
+                      </div>
+                  
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Contact *</label>
+                  <div class="input-group">
+                    <input type="text" maxlength="10" class="form-control" placeholder="Contact"
+                    formControlName="contact" (keypress)="validator.numberOnly($event)"/>
+                    <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
+                      <div *ngIf="f.contact.errors.required">Contact is required
+                      </div>
+                    
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Age</label>
+                  <div class="input-group">
+                    <input type="text" maxlength="2" class="form-control" placeholder="Enter age" formControlName="age" (keypress)="validator.numberOnly($event)" />
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Address *</label>
+                  <div class="input-group">
+                    <app-location style="width:100%"  formControlName="location" [placeholder]="'Select location'"></app-location>
+                    <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                      <div *ngIf="f.location.errors.required">Address is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Constituency *</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Constituency"
+                    formControlName="constituency" (keypress)="validator.alphanumericOnly($event)"/>
+                    <div *ngIf="submitted && f.constituency.errors" class="invalid-feedback">
+                      <div *ngIf="f.constituency.errors.required">This field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Adhaar</label>
+                  <div class="input-group mt-2 input-group mt-2 form-check form-check-inline">
+                        <label>
+                        <input type="radio" class="form-check-input" formControlName="hasAdhaar" value="Yes" (change)="toggleAdhaarType(true)">Yes
+                       </label>
+                       <label class="custom-button-margin">
+                        <input type="radio"  class="form-check-input" formControlName="hasAdhaar" value="No" (change)="toggleAdhaarType(false)">No
+                       </label>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" *ngIf="LinkedWithAdhaar">
+                  <label for="name" class="form-label">Adhaar Number</label>
+                  <div class="input-group">
+                    <input type="text" minlength="12" maxlength="12" class="form-control" placeholder="Enter Adhaar Number" formControlName="adhaarNumber" (keypress)="validator.numberOnly($event)"/>
+                      <div *ngIf="submitted && f.adhaarNumber.errors" class="invalid-feedback">
+                        <div *ngIf="f.adhaarNumber.errors.required">This field is required
+                        </div>
+                        <div *ngIf="f.adhaarNumber.errors.minlength">
+                          This field must be minimum of 12 numbers 
+                        </div>
+                        
+                       </div>
+                  </div>
+                </div>
+                
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" >
+                  <label for="title" class="form-label">Referred By*</label>
+                  <div class="input-group">
+                    <app-searchNew  formControlName="referredBy" style="width:100%" [list]="customers" [onSearchAction]="searchCustomer" [defaultValue]="{ key: referredBy, value: currentCustomer }"></app-searchNew>
+                    <div *ngIf="submitted && f.referredBy.errors" class="invalid-feedback">
+                      <div *ngIf="f.referredBy.errors.required">This field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+    
+  
+                <div class="col-md-12 my-3 text-right">
+                  <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                    {{mode=='Edit' ? 'Update' : 'Save'}}
+                    <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                      aria-hidden="true"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

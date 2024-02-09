@@ -1,0 +1,45 @@
+.card_header {
+    -webkit-box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, 0.55);
+    box-shadow: 1px 2px 5px 4px rgba(0,0,0,0.55);
+    border-radius: 10px;
+    padding: 30px 10px;
+}
+.mr-2 {
+    margin-right: 10px;
+}
+.text-right {
+    text-align: right!important;
+}
+.bdr-btm {
+    border-bottom: 1px solid #ced4da;
+}
+.transcribed-content-non-edit{
+    border: 1px solid #ced4da;
+    height: 108px;
+    padding-top: 11px;
+    overflow-y: scroll;
+    margin-top: 37px !important;
+}
+.audio_right{
+    float: right;
+}
+.lang-label{
+    font-size:17px;
+    margin-right:8px;
+}
+b{
+ font-size: 15px !important;
+}
+.message-overflow-class div{
+    white-space: nowrap;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis
+ }
+ tr td{
+    font-size: 14px !important;
+ }
+ .filename-font{
+    font-size: 17px !important;
+ }

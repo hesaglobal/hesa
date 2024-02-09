@@ -1,0 +1,10 @@
+
+<ng-container  *ngIf="!displayValue.url; else showimage">
+  <input id="image-uploadify" type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" multiple>
+</ng-container>
+<ng-template #showimage>
+  <img [src]="displayValue.url" height="50px" width="50px"  class="rounded-circle p-1 bg-primary">
+  <a  class="btn btn-outline-danger" (click)="removeImage()"  style="margin-left:3px;">
+     <i  class="bx bx-trash me-0"></i>
+   </a>
+</ng-template>

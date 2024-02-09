@@ -1,0 +1,43 @@
+.lang_btn{
+    padding: 4px!important;
+}
+.disabled-button{
+    background-color: #c5bcbc !important;
+    pointer-events: none;
+    border-color: #c5bcbc!important;
+    }
+   .iconsize {
+    font-size: x-large;
+    vertical-align: middle;
+   }
+
+   .dev_btn{
+   padding: 2px 6px !important;
+   margin:3px !important;   
+}
+.actions-div{
+    position: relative;
+}
+.del-btn-div{
+    position: absolute;
+    right: 15px;
+    top: 14px;
+}
+.box-icon-size{
+    font-size: 20px !important;
+}
+.rectangle{
+    width:200px
+}
+
+.file-deco{
+    text-decoration: underline;
+}
+
+.up_rec {
+    background: #fff;
+    padding: 25px;
+    border-radius: 6px;
+    height: 100%;
+    box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.12);
+}

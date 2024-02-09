@@ -1,0 +1,12 @@
+.comboview {
+  padding-left: 0px !important;
+  position: absolute !important;
+  width: 100% !important;
+}
+
+.list-group-item:hover {
+  z-index: 2;
+  color: #fff;
+  background-color: #574C88;
+  border-color: #574C88;
+}

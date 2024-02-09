@@ -1,0 +1,65 @@
+<div class="row row-cols-sm-auto">
+	<div class="col-12">
+
+    <label for="icon" class="form-label">{{options.fromLabel}}</label>
+		<div class="dp-hidden position-absolute">
+			<div class="input-group">
+				<input
+					name="datepicker"
+					class="form-control cal"
+					ngbDatepicker
+					#datepicker="ngbDatepicker"
+					[autoClose]="'outside'"
+					(dateSelect)="onDateSelection($event)"
+					[displayMonths]="2"
+					[dayTemplate]="t"
+					outsideDays="hidden"
+					[startDate]="selectValue.fromDate!"
+					tabindex="-1"
+				/>
+				<ng-template #t let-date let-focused="focused">
+					<span
+						class="custom-day"
+						[class.focused]="focused"
+						[class.range]="isRange(date)"
+						[class.faded]="isHovered(date) || isInside(date)"
+						(mouseenter)="hoveredDate = date"
+						(mouseleave)="hoveredDate = null">
+						{{ date.day }}
+					</span>
+				</ng-template>
+			</div>
+		</div>
+
+		<div class="input-group input-icons">
+			<input
+				#dpFromDate
+				class="form-control datefield cal"
+				[placeholder]="options.fromDatePlaceHolder"
+				name="dpFromDate"
+				[value]="selectValue.fromDate | ngbdateformat"
+				(keydown)="handleKeyDown($event)"
+        (click)="datepicker.toggle()"
+        (keyup.enter)="datepicker.toggle()"
+			/>
+			<i class="fadeIn animated bx bx-calendar-star bx-md cal" (click)="datepicker.toggle()" type="button"></i>
+		</div>
+	</div>
+	<div class="col-12">
+    <label for="icon" class="form-label">{{options.toLabel}}</label>
+		<div class="input-group  input-icons">
+			<input
+				#dpToDate
+				class="form-control cal"
+				[placeholder]="options.toDatePlaceHolder"
+				name="dpToDate"
+        (blur)="formatter.format(selectValue.toDate)"
+        [value]="selectValue.toDate|ngbdateformat"
+				(input)="selectValue.toDate = validateInput(selectValue.toDate, dpToDate.value)"
+			/>
+			<!-- <button class="btn btn-outline-secondary bi bi-calendar3" (click)="datepicker.toggle()" type="button"></button> -->
+			<i class="fadeIn animated bx bx-calendar-star bx-md cal" (click)="datepicker.toggle()" type="button"></i>
+    </div>
+	</div>
+</div>
+

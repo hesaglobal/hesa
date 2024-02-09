@@ -1,0 +1,48 @@
+<div class="card radius-15">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+              <div class="card-title ps-3">
+                <h4 class="mb-0">Enquiry</h4>
+              </div>
+            </div>
+            <div class="col-6 text-end ms-auto">
+              <div class="card-title">
+                <h5 class="mb-0">Total Enquires : {{ collectionSize }}</h5>
+              </div>
+            </div>
+        </div>
+<hr>
+        <ng-container>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let enquiry of enquiry">
+                        <td>{{ enquiry.createdAt | dateformat}}</td>
+                        <td>{{ enquiry.user.name }}</td>
+                        <td>{{ enquiry.user.mobile }}</td>
+                        <td>{{ enquiry.user.email}}</td>
+                        <td>{{ enquiry.message }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="enquiry?.length > 0" class="row justify-content-center m-0 pt-3">
+                <div class="col-auto d-flex justify-content-center text-center">
+                    <ngb-pagination (pageChange)="getPageFromService($event)" [pageSize]="pageSize"
+                        [(page)]="page" [maxSize]="5" [rotate]="true" [collectionSize]="collectionSize"
+                        [boundaryLinks]="true">
+                    </ngb-pagination>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+  

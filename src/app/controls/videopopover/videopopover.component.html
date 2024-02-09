@@ -1,0 +1,6 @@
+<i class="bx bx-show text-primary pl-3 cursor-pointer" [ngbPopover]="popContent" triggers="mouseenter:mouseleave"
+  [popoverTitle]="title"></i>
+
+  <ng-template #popContent>
+    <video [src]="baseUrl + content" loop muted autoplay width="200px" height="140px"></video>
+  </ng-template>

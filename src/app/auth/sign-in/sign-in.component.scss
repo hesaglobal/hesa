@@ -1,0 +1,42 @@
+.login {
+  background-image: url("/assets/images/ai.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 10rem;
+  background-position: center center;
+  background-attachment: fixed;
+  height: 100vh;
+}
+.signin_form {
+  border-radius: 6px;
+}
+.logo-img img {
+  width: 12rem;
+}
+.login-btn {
+  width: 100%;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  font-size: 1.1rem;
+}
+.for_border {
+  border: 1px solid lightgray;
+}
+.login_heading {
+  font-size: 1rem;
+}
+
+.hide_pass {
+  // position: absolute;
+  // left: 63rem;
+  font-size: 1.2rem;
+  border: 1px solid #ced4da;
+  padding-top: 7px;
+  padding-left: 1.5rem;
+  margin-left: -14px;
+  border-left: none;
+  border-radius: 0px 5px 5px 0px;
+}
+.in_pass {
+  border-right: none;
+}

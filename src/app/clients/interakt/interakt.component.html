@@ -1,0 +1,53 @@
+
+<div class="card radius-15">
+    <div class="card-body">
+      <div class="card-title ps-3"  >
+        <div class="row">
+          <div class="col-9"><h4 class="mb-0">Messages</h4></div>
+        </div>
+      </div>
+      <hr>
+    <table class="table table-striped" width="1--%">
+        <thead>
+          <tr>
+            <th scope="col" >Date / Time</th>
+            <th scope="col">Message Id</th>
+            <th scope="col" >Name</th>
+            <th scope="col">Type</th>
+            <th scope="col" >Contact Number</th>
+            <th scope="col">Source</th>
+            <th scope="col">Module</th>
+            <th scope="col">Last Replayed</th>
+            <th scope="col"  class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let message of interaktmessages;index as i">
+            <td>{{message?.createdAt | dateformat :'MMM DD YYYY hh:mm A'}}</td>
+            <td (click)="viewFile(message.fileId,message.module)" [class]="message.fileId&&message.module ? 'cursor-pointer' : ''">{{message?.message?.id}}</td>
+            <td>{{message?.customer?.traits?.name}}</td>
+            <td>{{message?.message?.message_content_type}}</td>
+            <td>{{message?.customer?.phone_number}}</td>
+            <td>{{message?.source}}</td>
+            <td (click)="viewFile(message.fileId,message.module)" class="cursor-pointer">{{message?.module}}</td>
+            <td>{{message?.replayedOn | dateformat :'MMM DD YYYY hh:mm A'}}</td>
+            <td class="text-capitalize text-center" >
+                  <button class="btn btn-success dev_btn" type="button" [disabled]="dataServices.isAPICalling&&messageId==message._id"  (click)="onReplay(message._id)"> <span *ngIf="dataServices.isAPICalling&&messageId==message._id" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <i *ngIf="!(dataServices.isAPICalling&&messageId==message._id)" class="bx bx-repeat box-icon-size"></i><span *ngIf="!(dataServices.isAPICalling&&messageId==message._id)">Replay</span>
+                    <span *ngIf="dataServices.isAPICalling&&messageId==message._id">Replaying</span>
+                  </button>
+            </td>
+         </tr>
+        </tbody>
+      </table>
+      <div *ngIf="interaktmessages?.length > 0" class="row justify-content-center m-0 pt-3">
+        <div class="col-auto d-flex justify-content-center text-center">
+            <ngb-pagination (pageChange)="getInteraktMessages($event)" [pageSize]="pageSize"
+                [(page)]="page" [maxSize]="5" [rotate]="true" [collectionSize]="collectionSize"
+                [boundaryLinks]="true">
+            </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+

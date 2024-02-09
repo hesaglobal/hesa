@@ -1,0 +1,431 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Transcribe</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-primary"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Transcripted Content</li>
+      </ol>
+
+    </nav>
+  </div>
+</div>
+<div class="container1">
+  <div class="row">
+    <div class="col-12">
+      <div class="tab-content" id="danger-pills-tabContent">
+
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+
+              <div class="row">
+
+                <div class="col-6 ">
+                  <label class="text-capitalize mt-1" *ngIf="fileName"><b class="filename-font">File :</b>
+                    {{fileName}}</label>
+                </div>
+                <div class="col-4 my-auto">
+                </div>
+                <div class="col-2 my-auto">
+
+                </div>
+                <div class="col-6">
+                  <div class="form-group" *ngIf="fileType=='image'">
+                    <b>File Uploaded </b>
+
+                    <div class="form-group mt-1">
+                      <img [src]="fileSrc" *ngIf="fileSrc" alt="file uploaded" class="sizer-image img-fluid">
+                    </div>
+
+                  </div>
+                  <div class="form-group" *ngIf="fileType=='audio'">
+                    <b>File Uploaded </b>
+
+                    <div class="form-group mt-1">
+                      <audio controls class="mt-2">
+                        <source [src]="fileSrc" type="audio/mpeg">
+                      </audio>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <b>Transcribed Content</b>
+                    <a class="position-relative audio_right" role="button" *ngIf="fileType=='audio'">
+                      <i class='bx bx-copy bx-sm' (click)="copyToClipBoard(content)"></i>
+                    </a>
+                    <div class="form-group mt-1">
+                      <textarea class="form-control rounded-0" id="textarea-field" rows="4"
+                        [value]="content||''" (input)="onContentChange($event)"></textarea>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="col-12 mt-2">
+
+                  <div class="col-md-12 my-3 text-right">
+                    <button class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling"
+                      (click)="processOrder()">
+                      Process Order
+                      <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                        aria-hidden="true"></span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+    <div class="col-12" *ngIf="customerId||orderId">
+      <div class="card border-top border-0 border-4 border-primary">
+        <div class="card-body">
+          <div class="card-title d-flex align-items-center">
+            <div><i class="bx bxs-user me-1 font-22 text-primary"></i> </div>
+            <h5 class="mb-0 text-primary">Add Customer</h5>
+          </div>
+
+          <form class="row g-3" [formGroup]="addCustomerForm" (submit)="onSubmit()">
+            <div class="col-3">
+              <label for="name" class="form-label">Name*</label>
+              <div class="input-group">
+                <app-search [onSearchAction]="searchCustomerName" style="width:100%" [onSelectAction]="selectCustomer" [clearSearchBar]="clearSearchBar" placeholder="First Name" [value]="name" formControlName="name" ngDefaultControl></app-search>
+                <div *ngIf="submitted && customerFormControls.name.errors" class="invalid-feedback">
+                  <div *ngIf="customerFormControls.name.errors.required">Name is required
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="col-3">
+              <label for="title" class="form-label">Contact *</label>
+              <div class="input-group">
+                <input type="text" maxlength="10" class="form-control" placeholder="Contact"
+                formControlName="contact" (keypress)="validator.numberOnly($event)"/>
+                <div *ngIf="submitted && customerFormControls.contact.errors" class="invalid-feedback">
+                  <div *ngIf="customerFormControls.contact.errors.required">Contact is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <label for="title" class="form-label">Incoming Contact *</label>
+              <div class="input-group">
+                <input type="text" maxlength="10" class="form-control" placeholder="Incoming Contact"
+                formControlName="incomingContact" (keypress)="validator.numberOnly($event)" disabled/>
+                <div *ngIf="submitted && customerFormControls.incomingContact.errors" class="invalid-feedback">
+                  <div *ngIf="customerFormControls.incomingContact.errors.required">Contact is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <label for="title" class="form-label">Address *</label>
+              <div class="input-group">
+                <app-location style="width:100%"  formControlName="location" [placeholder]="'Select location'"></app-location>
+                <div *ngIf="submitted && customerFormControls.location.errors" class="invalid-feedback">
+                  <div *ngIf="customerFormControls.location.errors.required">Address is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <label for="title" class="form-label">Linked with Hesaathi*</label>
+              <div class="input-group mt-2 form-check form-check-inline">
+                    <label class="">
+                    <input type="radio" class="form-check-input"  formControlName="hesaathiLinking" value="Yes" (change)="toggleHesaathiType(true)">Yes
+                   </label>
+                   <label class="custom-button-margin">
+                    <input type="radio" class="form-check-input" formControlName="hesaathiLinking" value="No" (change)="toggleHesaathiType(false)">No
+                   </label>
+                <div *ngIf="submitted && customerFormControls.hesaathiLinking.errors" class="invalid-feedback">
+                  <div *ngIf="customerFormControls.hesaathiLinking.errors.required">This field is required
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-3" *ngIf="LinkedWithHesaathi">
+              <label for="title" class="form-label">Select Hesathi*</label>
+              <div class="input-group">
+                <app-searchNew  formControlName="hesaathi" style="width: 100%!important;" [list]="hesaathis" [onSearchAction]="searchHesaathi" [defaultValue]="{ key: customerFormControls.hesaathi.value, value: currentHesaathi }"></app-searchNew>
+                <div *ngIf="submitted && customerFormControls.hesaathi.errors" class="invalid-feedback">
+                  <div *ngIf="customerFormControls.hesaathi.errors.required">This field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-3">
+                <label for="title" class="form-label">Type*</label>
+                <div class="input-group">
+                  <select class="form-select" formControlName="type" >
+                    <option [value]="type" *ngFor="let type of types">{{type}}</option>
+                  </select>
+                  <div *ngIf="submitted && customerFormControls.type.errors" class="invalid-feedback">
+                    <div *ngIf="customerFormControls.type.errors.required">Type is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <div class="col-3">
+                <label for="title" class="form-label">GST Treatment*</label>
+                <div class="input-group mt-2 form-check form-check-inline">
+                      <label class="">
+                        <input type="radio" class="form-check-input" formControlName="GSTTreatment" value="Yes" (change)="toggleGSTType(true)">Yes
+                      </label>
+                      <label class="custom-button-margin">
+                        <input type="radio"  class="form-check-input" formControlName="GSTTreatment" value="No" (change)="toggleGSTType(false)">No
+                      </label>
+                     <div *ngIf="submitted && customerFormControls.GSTTreatment.errors" class="invalid-feedback">
+                      <div *ngIf="customerFormControls.GSTTreatment.errors.required">This field is required
+                      </div>
+                     </div>
+              </div>
+              </div>
+              <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" *ngIf="LinkedWithGST">
+                <label for="title" class="form-label">GST Treatment*</label>
+                <div class="input-group">
+                  <select class="form-select" formControlName="GSTTreatmentType">
+                    <option [value]="type" *ngFor="let type of GSTTypes">{{type}}</option>
+                  </select>
+                  <div *ngIf="submitted && customerFormControls.GSTTreatmentType.errors" class="invalid-feedback">
+                    <div *ngIf="customerFormControls.GSTTreatmentType.errors.required">This field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" *ngIf="LinkedWithGST">
+                <label for="title" class="form-label">GSTIN*</label>
+                <div class="input-group">
+                  <input type="text" minlength="15" maxlength="15" class="form-control" placeholder="GSTIN Number" formControlName="GSTIN"
+                   />
+                  <div *ngIf="submitted && customerFormControls.GSTIN.errors" class="invalid-feedback">
+                    <div *ngIf="customerFormControls.GSTIN.errors.required">This field is required
+                    </div>
+                    <div *ngIf="customerFormControls.GSTIN.errors.pattern">Invalid GSTIN format</div>
+                     <div *ngIf="customerFormControls.GSTIN.errors.whitespace && !customerFormControls.GSTIN.errors.required">
+                      Please enter GSTIN </div>
+                    <div *ngIf="customerFormControls.GSTIN.errors.minlength">
+                      This field must be minimum of 15 characters </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-md-12 my-3 text-right">
+              <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                Save
+                <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                  aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+
+
+        </div>
+</div>
+    </div>
+
+
+    <div class="col-12">
+      <div class="card border-top border-0 border-4 border-primary">
+        <div class="card-body">  
+  <div class="tab-content">
+    <div class="table-responsive">
+      <table class="table mb-0" width="1--%">
+        <thead class="table-light">
+          <tr>
+            <th scope="col" width="7%">Id</th>
+            <th scope="col" width="16%">Item name</th>
+            <th scope="col" width="16%">Input Item</th>
+            <th scope="col" width="7%">Sale Price</th>
+            <!-- <th>Purchase Price</th> -->
+            <th scope="col" width="12%">Display Price</th>
+            <th scope="col" width="4%">Quantity</th>
+            <th scope="col" width="9%">Unit</th>
+            <th scope="col" width="7%">Amount</th>
+            <!-- <th>HSN Code</th> -->
+            <th scope="col" width="8%">GST</th>
+            <!-- <th scope="col" width="7%">Available</th> -->
+            <th scope="col" width="7%">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of items.controls; let i=index">
+            <ng-container [formGroup]="item">
+              <td>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="ms-2">
+                    <h6 class="mb-0 font-14">{{i+1}}</h6>
+                  </div>
+                </div>
+              </td>
+              <td><input type="text" (focus)="setValue(item.value.itemName)"
+                  (blur)="valueChange('itemName',item.value.itemName, item.value._id,item.value)"
+                  class="form-control rounded-0" formControlName="itemName" /></td>
+              <td><input type="text" class="form-control rounded-0"
+                  formControlName="inputItem" disabled/></td>
+              <td>
+                <input type="text" (focus)="setValue(item.value.salePrice)"
+                  (blur)="valueChange('salePrice',item.value.salePrice, item.value._id,item.value)"
+                  class="form-control rounded-0" formControlName="salePrice" (keypress)="validator.numberOnly($event)"/>
+              </td>
+              <!-- <td>
+                <input type="text" (focus)="setValue(item.value.purchasePrice)"
+                  (blur)="valueChange('purchasePrice',item.value.purchasePrice, item.value._id,item.value)"
+                  class="form-control rounded-0" formControlName="purchasePrice" />
+              </td> -->
+              <td class="d-flex">
+                <input type="text" (focus)="setValue(item.value.displayPrice)"
+                  (blur)="valueChange('displayPrice',item.value.displayPrice, item.value._id,item.value)"
+                  class="form-control rounded-0" formControlName="displayPrice" (keypress)="validator.numberOnly($event)" />
+                  <input type="text"
+                  class="form-control rounded-0 form_gram_label" formControlName="itemunit"  disabled />
+              </td>
+              <td>
+                <input type="text" (focus)="setValue(item.value.quantity)"
+                  (blur)="valueChange('quantity',item.value.quantity, item.value._id,item.value,img)"
+                  class="form-control rounded-0" formControlName="quantity" (keypress)="validator.numberOnly($event)"/>
+              </td>
+              <td>
+                <input type="text" (focus)="setValue(item.value.units)"
+                  (blur)="valueChange('units',item.value.units, item.value._id,item.value)"
+                  class="form-control rounded-0" formControlName="units" />
+              </td>
+              <td>
+                <input type="text" (focus)="setValue(item.value.amount)"
+                (blur)="valueChange('amount',item.value.amount, item.value._id,item.value,img)"
+                class="form-control rounded-0" formControlName="amount" (keypress)="validator.numberOnly($event)"/>
+              </td>
+              <!-- <td>
+                <input type="text" (focus)="setValue(item.value.HSNCode)"
+                  (blur)="valueChange('HSNCode',item.value.HSNCode, item.value._id,item.value,img)"
+                  class="form-control rounded-0" formControlName="HSNCode" />
+              </td> -->
+              <td>
+                <input type="text" (focus)="setValue(item.value.GSTRate)"
+                  (blur)="valueChange('GSTRate',item.value.GSTRate, item.value._id,item.value,img)"
+                  class="form-control rounded-0" formControlName="GSTRate" (keypress)="validator.numberOnly($event)" />
+              </td>
+              <!-- <td class="form-switch">
+                <input type="checkbox"
+                  (click)="valueChange('available',!item.value.available, item.value._id,item.value,i)"
+                  formControlName="available" class="form-check-input" style="margin-left:auto !important">
+              </td> -->
+
+              <td>
+                <div class="d-flex order-actions">
+                  <div class="form-switch">
+                    <input type="checkbox"
+                  (click)="valueChange('available',!item.value.available, item.value._id,item.value,i)"
+                  formControlName="available" class="form-check-input" style="margin-left:auto !important">
+                  </div>
+                  <div (click)="removeItem(item.value._id, i,item.value.itemName)" class="ms-3 cursor-pointer"><i
+                      class='bx bxs-trash  box-icon-size text-danger'></i>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+          </tr>
+          <tr>
+            <td colspan="11" class="pb-5">
+              <div class="ms-3 text-end">
+                <div (click)="addOrderItem()" class="btn btn-primary btn-rounded text-white my-auto align-middle"><i
+                    class='bx bxs-plus-square text-white my-auto'></i>Add New</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+  <div class="col-12" *ngIf="orderId">
+    <div class="card border-top border-0 border-4 border-primary">
+      <div class="card-body">
+        <div class="card-title d-flex align-items-center">
+          <div><i class="bx bxs-user me-1 font-22 text-primary"></i> </div>
+          <h5 class="mb-0 text-primary">Payment</h5>
+        </div>
+
+        <form class="row g-3" [formGroup]="paymentForm">
+           <div class="col-2">
+            <label for="totalamount" class="form-label">Total Amount</label>
+            <div class="input-group">
+              <input type="text" maxlength="10" class="form-control" placeholder="Total Amount"
+              formControlName="totalamount" (keypress)="validator.numberOnly($event)" (blur)="updatePayment('totalamount',$event)"/>
+            </div>
+          </div>
+           <div class="col-2">
+            <label for="paidamount" class="form-label">Amount paid</label>
+            <div class="input-group">
+              <input type="text" maxlength="10" class="form-control" placeholder="Amount Paid" (blur)="updatePayment('amountpaid',$event)"
+              formControlName="amountpaid" (keypress)="validator.numberOnly($event)" />
+            </div>
+          </div>
+          <div class="col-2">
+            <label for="balance" class="form-label">Balance</label>
+            <div class="input-group">
+              <input type="text" maxlength="10" class="form-control" placeholder="Balance"
+              formControlName="balance" (keypress)="validator.numberOnly($event)" (blur)="updatePayment('balance',$event)" disabled/>
+            </div>
+          </div>
+
+
+
+          <div class="col-3">
+            <label for="title" class="form-label">Order status</label>
+            <select class="form-select form-select form-select-md" formControlName="orderStatus" (change)="updatePayment('orderStatus',$event)">
+              <option *ngFor="let status of orderStatus" [value]="status.value">{{ status.name }}</option>
+            </select>
+            <div class="spinner-border text-primary status-placement" role="status" *ngIf="dataservice.isAPICalling && paymentFormControls.orderStatus.value==='Accepted'">
+            </div>
+          </div>
+
+          <div class="col-3">
+            <label for="title" class="form-label">Payment status</label>
+              <select class="form-select form-select form-select-md" formControlName="paymentStatus" (change)="updatePayment('paymentStatus',$event)">
+                <option *ngFor="let status of paymentStatus" [value]="status.value">{{ status.name }}</option>
+              </select>
+          </div>
+
+          <div class="col-3">
+            <label for="receipt" class="form-label">Receipt</label>
+            <div class="input-group">
+              <app-upload-image formControlName="receipt" [className]="'rectangle'" (change)="updatePayment('receipt',$event)"></app-upload-image>
+            </div>
+          </div>
+
+
+
+          <div class="col-3">
+            <label for="parentPic" class="form-label">Remarks</label>
+            <div class="input-group">
+              <textarea class="form-control rounded-0" rows="2" cols="3" id="textarea-field"
+              formControlName="remarks" (blur)="updatePayment('remarks',$event)"></textarea>
+            </div>
+          </div>
+
+        </form>
+      </div>
+</div>
+  </div>
+</div>

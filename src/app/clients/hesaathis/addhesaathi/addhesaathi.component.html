@@ -1,0 +1,149 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Hesaathi</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-primary"></i></a>
+        </li>
+
+        <li class="breadcrumb-item active" aria-current="page">{{mode}} Hesaathi</li>
+      </ol>
+
+    </nav>
+  </div>
+  <div class="ms-auto">
+    <button [routerLink]="['/client/hesaathi']" class="btn btn-primary px-5 text-white"><i class="bx bx-hive mr-1"></i>View
+      Hesaathis</button>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="tab-content" id="danger-pills-tabContent">
+
+      <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+        <div class="card border-top border-0 border-4 border-primary">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-center">
+              <div><i class="bx bxs-user me-1 font-22 text-primary"></i> </div>
+              <h5 class="mb-0 text-primary">{{(mode == 'Add')? ' Add Hesaathi' :
+                'Edit Hesaathi'}} </h5>
+            </div>
+
+            <form class="row g-3" [formGroup]="addHesaathiForm" (submit)="onSubmit()">
+              <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="name" class="form-label">Hesaathi Name*</label>
+                <div class="input-group">
+                  <input type="text" maxlength="30" class="form-control" placeholder="Hesaathi Name"
+                    formControlName="name" />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Hesaathi Name is required
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="title" class="form-label">Contact Number *</label>
+                <div class="input-group">
+                  <input type="text" maxlength="10" class="form-control" placeholder="Hesaathi contact number"
+                    formControlName="mobile" />
+                  <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                    <div *ngIf="f.mobile.errors.required">Contact number is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="title" class="form-label">Address *</label>
+                <div class="input-group">
+                    <app-location style="width:100%"  formControlName="address" [placeholder]="'Select location'"></app-location>
+                  <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                    <div *ngIf="f.address.errors.required">Address is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="title" class="form-label">Type*</label>
+                <div class="input-group">
+                
+                    <select class="form-select" formControlName="type" >
+                      <option [value]="type" *ngFor="let type of types">{{type}}</option>
+                    </select>
+                  <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                    <div *ngIf="f.type.errors.required">Type is required
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="title" class="form-label">Staff Name*</label>
+                <div class="input-group">
+                  <app-searchNew  formControlName="staff" style="width:100%" [list]="staffs" [onSearchAction]="searchStaff" [defaultValue]="{ key: f.staff.value, value: currentStaff }"></app-searchNew>
+                  <div *ngIf="submitted && f.staff.errors" class="invalid-feedback">
+                    <div *ngIf="f.staff.errors.required">Staff Name is required
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="title" class="form-label">Aadhar Number*</label>
+                <div class="input-group">
+                  <input type="text"  class="form-control"  placeholder="Aadhar Number"
+                    formControlName="aadhar" maxlength="12" />
+                  <div *ngIf="submitted && f.aadhar.errors" class="invalid-feedback">
+                    <div *ngIf="f.aadhar.errors.required">Aadhar Number is required
+                    </div>
+                    <div *ngIf="f.aadhar.errors.minlength">Aadhar Number should be of 12 digits
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="title" class="form-label">GST Treatment*</label>
+                <div class="input-group">
+                  <select class="form-select" formControlName="gst" >
+                    <option  value="true">Yes</option>
+                    <option  value="false">No</option>
+                  </select>
+
+
+                </div>
+              </div>
+
+              <!-- <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                <label for="title" class="form-label">Units *</label>
+                <div class="input-group">
+                  <select class="form-select" formControlName="units" >
+                    <option [value]="unit" *ngFor="let unit of units">{{unit}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.units.errors" class="invalid-feedback">
+                    <div *ngIf="f.units.errors.required">Unit is required
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="col-md-12 my-3 text-right">
+                <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                  {{mode=='Edit' ? 'Update' : 'Save'}}
+                  <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                    aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

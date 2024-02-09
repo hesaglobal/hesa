@@ -1,0 +1,168 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Customers</div>
+    <div class="ps-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 p-0">
+          <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+                class="bx bx-home-alt text-primary"></i></a>
+          </li>
+  
+          <li class="breadcrumb-item active" aria-current="page">{{mode}} Customer</li>
+        </ol>
+  
+      </nav>
+    </div>
+    <div class="ms-auto">
+      <button (click)="viewCustomers()" class="btn btn-primary px-5 text-white"><i class="bx bx-hive mr-1"></i>View
+        Customers</button>
+    </div>
+  
+  </div>
+  
+  <div class="row">
+    <div class="col">
+      <div class="tab-content" id="danger-pills-tabContent">
+  
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+  
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+              <div class="card-title d-flex align-items-center">
+                <div><i class="bx bxs-user me-1 font-22 text-primary"></i> </div>
+                <h5 class="mb-0 text-primary">{{(mode == 'Add')? ' Add Customer' :
+                  'Edit Customer'}} </h5>
+              </div>
+  
+              <form class="row g-3" [formGroup]="addCustomerForm" (submit)="onSubmit()">
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="name" class="form-label">Name*</label>
+                  <div class="input-group">
+                    <input type="text" maxlength="30" class="form-control" placeholder="Name"
+                      formControlName="name" />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Name is required
+                      </div>
+                  
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Contact *</label>
+                  <div class="input-group">
+                    <input type="text" maxlength="10" class="form-control" placeholder="Contact"
+                    formControlName="contact" (keypress)="validator.numberOnly($event)"/>
+                    <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
+                      <div *ngIf="f.contact.errors.required">Contact is required
+                      </div>
+                    
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Address *</label>
+                  <div class="input-group">
+                    <app-location style="width:100%"  formControlName="location" [placeholder]="'Select location'"></app-location>
+                    <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                      <div *ngIf="f.location.errors.required">Address is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                  <label for="title" class="form-label">Linked with Hesaathi*</label>
+                  <div class="input-group mt-2 input-group mt-2 form-check form-check-inline">
+                        <label>
+                        <input type="radio" class="form-check-input" formControlName="hesaathiLinking" value="Yes" (change)="toggleHesaathiType(true)">Yes
+                       </label>
+                       <label class="custom-button-margin">
+                        <input type="radio"  class="form-check-input" formControlName="hesaathiLinking" value="No" (change)="toggleHesaathiType(false)">No
+                       </label>
+                    <div *ngIf="submitted && f.hesaathiLinking.errors" class="invalid-feedback">
+                      <div *ngIf="f.hesaathiLinking.errors.required">This field is required
+                      </div>
+                    </div>
+  
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" *ngIf="LinkedWithHesaathi">
+                  <label for="title" class="form-label">Select Hesaathi*</label>
+                  <div class="input-group">
+                    <app-searchNew  formControlName="hesaathi" style="width:100%" [list]="hesaathis" [onSearchAction]="searchHesaathi" [defaultValue]="{ key: f.hesaathi.value, value: currentHesaathi }"></app-searchNew>
+                    <div *ngIf="submitted && f.hesaathi.errors" class="invalid-feedback">
+                      <div *ngIf="f.hesaathi.errors.required">This field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                    <label for="title" class="form-label">Type*</label>
+                    <div class="input-group">
+                      <select class="form-select" formControlName="type" >
+                        <option [value]="type" *ngFor="let type of types">{{type}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                        <div *ngIf="f.type.errors.required">Type is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                    <label for="title" class="form-label">GST Treatment*</label>
+                    <div class="input-group mt-2 input-group mt-2 form-check form-check-inline">
+                          <label>
+                            <input type="radio" class="form-check-input"  formControlName="GSTTreatment" value="Yes" (change)="toggleGSTType(true)">Yes
+                          </label>
+                          <label class="custom-button-margin">
+                            <input type="radio" class="form-check-input"  formControlName="GSTTreatment" value="No" (change)="toggleGSTType(false)">No
+                          </label>
+                         <div *ngIf="submitted && f.GSTTreatment.errors" class="invalid-feedback">
+                          <div *ngIf="f.GSTTreatment.errors.required">This field is required
+                          </div>
+                         </div>
+                  </div>
+                  </div>
+                  <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" *ngIf="LinkedWithGST">
+                    <label for="title" class="form-label">GST Treatment*</label>
+                    <div class="input-group">
+                      <select class="form-select" formControlName="GSTTreatmentType">
+                        <option [value]="type" *ngFor="let type of GSTTypes">{{type}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.GSTTreatmentType.errors" class="invalid-feedback">
+                        <div *ngIf="f.GSTTreatmentType.errors.required">This field is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12" *ngIf="LinkedWithGST">
+                    <label for="title" class="form-label">GSTIN*</label>
+                    <div class="input-group">
+                      <input type="text" minlength="15" maxlength="15" class="form-control" placeholder="GSTIN Number" formControlName="GSTIN"
+                        />
+                      <div *ngIf="submitted && f.GSTIN.errors" class="invalid-feedback">
+                        <div *ngIf="f.GSTIN.errors.required">This field is required
+                        </div>
+                        <div *ngIf="f.GSTIN.errors.pattern">Invalid GSTIN format</div>
+                         <div *ngIf="f.GSTIN.errors.whitespace && !f.GSTIN.errors.required">
+                          Please enter GSTIN </div>
+                        <div *ngIf="f.GSTIN.errors.minlength">
+                          This field must be minimum of 15 characters </div>
+                      </div>
+                    </div>
+                  </div>
+    
+  
+                <div class="col-md-12 my-3 text-right">
+                  <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                    {{mode=='Edit' ? 'Update' : 'Save'}}
+                    <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                      aria-hidden="true"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

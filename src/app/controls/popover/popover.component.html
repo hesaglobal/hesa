@@ -1,0 +1,7 @@
+<i class="bx bx-show text-danger pl-3 cursor-pointer" *ngIf="content"  [ngbPopover]="popoverContent"  [triggers]="triggers" [popoverTitle]="title">
+</i>
+<ng-template #popoverContent>
+    <div class="custom-popover-content">
+      {{content}}
+    </div>
+  </ng-template>

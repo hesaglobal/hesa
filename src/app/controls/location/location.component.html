@@ -1,0 +1,17 @@
+<!-- <input autocomplete="off" [value]="selectValue.value || defaultValue.value || ''" (blur)="blurHandler($event)" (keydown)="handleArrowKeys($event)" [placeholder]="placeholder" type="text"class="form-control"/>
+<ul class="list-group searchItems comboview" *ngIf="showResults">
+  <ng-container *ngFor="let option of list">
+    <li class="list-group-item cursor-pointer" (click)="navigate(option)" [ngClass]="option.selected ? 'active' : '' "  [value]="option.key">{{option.value}}</li>
+  </ng-container>
+</ul> -->
+
+<input
+      type="text"
+      class="form-control"
+      [placeholder]="placeholder"
+      aria-label="Username"
+      aria-describedby="addon-wrapping"
+      value={{selectValue.locationName}}
+    />
+
+

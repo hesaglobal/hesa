@@ -1,0 +1,64 @@
+<div class="card radius-15">
+    <div class="card-body">
+      <div class="card-title ps-3"  >
+        <div class="row">
+          <div class="col-9"><h4 class="mb-0">Transcriptions</h4></div>
+          <div class="col-3 ms-auto text-end">
+            <app-uploadpopover title="Upload File" [doneAction]="doneAction" module="General" maxLimit="5" allowedDuration="300"></app-uploadpopover>
+            </div>
+        </div>
+      </div>
+      <hr>
+    <table class="table table-striped" width="1--%">
+        <thead>
+          <tr>
+            <th scope="col" width="15%">Date / Time</th>
+            <th scope="col" width="45%">File</th>
+            <th scope="col" width="12%">Status</th>
+            <th scope="col" width="16%"></th>
+            <th scope="col" width="12%" class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transcript of transcriptions;">
+            <td>{{transcript.createdAt | dateformat :'MMM DD YYYY hh:mm A' }}</td>
+            <td class="text-capitalize"><span class="iconsize bx bx-cloud-download text-danger cursor-pointer" role="status" aria-hidden="true" (click)="download(transcript.file)" ></span>
+              {{transcript.file.name}}</td>
+         
+            <td class="text-capitalize">
+              <span class="iconsize spinner-grow text-success" role="status" aria-hidden="true" *ngIf="!dataServices.isAPICalling && transcript.status==='Pending'"></span>
+              <span class=" iconsize text-success bx bx-check-double" *ngIf="transcript.status==='Processed'" role="status" aria-hidden="true" ></span>
+
+              {{transcript.status}}</td>
+            <td class="text-capitalize">
+              <ng-template [ngIf]="transcript.status=='Pending'">
+                <button class="btn btn-success dev_btn d-inline" type="button" [disabled]="dataServices.isAPICalling&&fileId==transcript._id&&mode=='Process'"  (click)="onProcess(transcript.file.url,transcript._id)"> <span *ngIf="dataServices.isAPICalling&&fileId==transcript._id&&mode=='Process'" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span *ngIf="!(dataServices.isAPICalling&&fileId==transcript._id&&mode=='Process')">Process</span>
+                  <span *ngIf="dataServices.isAPICalling&&fileId==transcript._id&&mode=='Process'">Processing</span>
+                </button>
+              </ng-template>
+            </td>
+            <td  class="text-capitalize my-auto align-middle text-center actions-div">
+              <ng-template [ngIf]="transcript.status=='Processed'">
+               
+                <a href="javascript:" class="margin-right-del align-middle cursor-pointer" (click)="viewFile(transcript._id)"><i
+                  class="text-primary fadeIn animated bx bxs-show box-icon-size text-success"></i></a>
+              </ng-template>
+             
+              <a href="javascript:" class="margin-right-del align-middle del-btn-div cursor-pointer" (click)="onDelete(transcript._id,transcript.file.url,transcript.file.name)"><i
+                class="text-danger fadeIn animated bx bxs-trash box-icon-size"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="transcriptions?.length > 0" class="row justify-content-center m-0 pt-3 ">
+        <div class="col-auto d-flex justify-content-center text-center">
+            <ngb-pagination (pageChange)="getTarnscribedFiles($event)" [pageSize]="pageSize"
+                [(page)]="page" [maxSize]="5" [rotate]="true" [collectionSize]="collectionSize"
+                [boundaryLinks]="true">
+            </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+

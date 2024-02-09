@@ -1,0 +1,40 @@
+<div class="card radius-15">
+  <div class="card-body">
+    <div class="card-title ps-3">
+      <h4 class="mb-0">Packages</h4>
+    </div>
+    <div class="ms-auto">
+      <a type="button" [routerLink]="['./add']" class="btn btn-primary text-white  px-3"><i
+          class="fadeIn animated bx bxs-offer"></i> + Add Package</a>
+    </div>
+
+    <hr>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Coins</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Active From</th>
+          <th scope="col">Active Till</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let package of packages;">
+          <td class="text-capitalize">{{ package.title }}</td>
+          <td>{{ package.coins }}</td>
+          <td>{{ package.amount }}</td>
+          <td>{{ package.dateRange.fromDate | dateformat }}</td>
+          <td>{{ package.dateRange.toDate | dateformat }}</td>
+          <td width="10%">
+            <a href="javascript:" (click)="editPackage(package._id)"><i
+                class="text-primary fadeIn animated bx bx-edit-alt"></i></a>
+             | <a href="javascript:" (click)="showDialog(package._id)"><i
+                class="text-primary fadeIn animated bx bx-trash-alt"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

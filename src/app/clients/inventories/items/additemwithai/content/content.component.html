@@ -1,0 +1,465 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Description</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-primary"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Description</li>
+      </ol>
+
+    </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="tab-content" id="danger-pills-tabContent">
+
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body my-3">
+              <h5>Uploaded Files</h5>
+              <div class="row">
+                <div class="col-6">
+                  <div class="image-container">
+                    <div *ngFor="let image of uploadedImages" class="image-item">
+                      <img [src]="baseURL + image.url" alt="Image" class="uploaded-image">
+                      <!-- <a href="javascript:void(0)"><i class="btn-close"></i></a> -->
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-6" *ngIf="uploadedAudio&&uploadedAudio[0]?.url">
+                  <audio controls class="mt-2">
+                    <source [src]="baseURL+uploadedAudio[0].url" type="audio/wav">
+                  </audio>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+<form class="row g-3" [formGroup]="addItemForm" (submit)="updateResult($event)">
+      <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+        <div class="card border-top border-0 border-4 border-primary">
+          <div class="card-body my-3">
+            <h5>Basic Details</h5>
+
+            <div class="row mt-1">
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Product ID:</label>
+                <input type="text" id="" value="258" required="" class="form-control" formControlName="productId"
+                  readonly>
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Item Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Item Name" formControlName="itemName" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Category:</label>
+                <select class="form-select" formControlName="category">
+                  <option [value]="category._id" *ngFor="let category of categories">{{category.name}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Sub Category:</label>
+                <select class="form-select" formControlName="subCategory">
+                  <option [value]="subcategory._id" *ngFor="let subcategory of subcategories">{{subcategory.name}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Brand Name:</label>
+                <input type="text" class="form-control" id="brandname" placeholder="Brand Name"
+                  formControlName="brandName" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">EAN Code:</label>
+                <input type="text" class="form-control" id="eancode" maxlength="13" (input)="addingEANCode($event)" placeholder="EAN Code" formControlName="EANCode" />
+                <div *ngIf="submitted && f.EANCode.errors" class="invalid-feedback">
+                  <div *ngIf="f.EANCode.errors.required">EAN Code is required
+                  </div>
+                  <div *ngIf="f.EANCode.errors.minlength">
+                    This field must be minimum of 13 characters </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+        <div class="card border-top border-0 border-4 border-primary">
+          <div class="card-body my-3">
+            <h5>Pricing / Quantity & Shipping</h5>
+
+            <div class="row mt-1">
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Selling Price:</label>
+                <input type="text" class="form-control" id="sellingPrice" placeholder="Sale Price"
+                  (keypress)="validator.numberOnly($event)" formControlName="salePrice" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Max Retail Price (MRP):</label>
+                <input type="text" class="form-control" id="maxretailprice" placeholder="Max Retail Price"
+                  (keypress)="validator.numberOnly($event)" formControlName="maxRetailPrice" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Price Per Gram:</label>
+                <input type="text" class="form-control" id="pricepergram" placeholder="Price per gram"
+                  (keypress)="validator.numberOnly($event)" formControlName="pricepergram" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Purchase Price:</label>
+                <input type="text" class="form-control" id="purchasePrice" placeholder="Purchase Price"
+                  (keypress)="validator.numberOnly($event)" formControlName="purchasePrice" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">SGST Tax Rate:</label>
+                <input type="text" class="form-control" id="SGSTTaxRate" placeholder="SGST Tax Rate"
+                  (keypress)="validator.numberOnly($event)" formControlName="SGSTTaxRate" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">CGST Tax Rate:</label>
+                <input type="text" class="form-control" id="CGSTTaxRate" placeholder="CGST Tax Rate"
+                  (keypress)="validator.numberOnly($event)" formControlName="CGSTTaxRate" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">IGST Tax Rate:</label>
+                <input type="text" class="form-control" id="IGSTTaxRate" placeholder="IGST Tax Rate"
+                  (keypress)="validator.numberOnly($event)" formControlName="IGSTTaxRate" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Total Tax Rate:</label>
+                <input type="text" class="form-control" id="totalTaxRate" placeholder="Total Tax Rate"
+                  (keypress)="validator.numberOnly($event)" formControlName="TotalTaxRate" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Unit Denomination:</label>
+                <input type="text" class="form-control" id="UnitDenomination" placeholder="Unit Denomination"
+                  formControlName="UnitDenomination" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Unit Value:</label>
+                <input type="text" class="form-control" id="unitValue" placeholder="Unit Value"
+                  formControlName="UnitValue" />
+
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Quantity:</label>
+                <input type="text" class="form-control" id="quantity" placeholder="Quantity"
+                  (keypress)="validator.numberOnly($event)" formControlName="Quantity" />
+
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Is Selling Price Exclusive of GST:</label>
+                <select class="form-select" formControlName="IsSellingPriceExclusiveofGST">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Returnable:</label>
+
+                <select class="form-select" formControlName="Returnable">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Return Window:</label>
+                <input type="text" class="form-control" id="ReturnWindow" placeholder="Return Window"
+                  formControlName="ReturnWindow" />
+
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Seller Pickup Return:</label>
+
+                <select class="form-select" formControlName="SellerPickupReturn">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Cancellable:</label>
+                <select class="form-select" formControlName="Cancellable">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">COD Availability:</label>
+                <select class="form-select" formControlName="CODAvailability">
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Time to Ship:</label>
+                <input type="text" class="form-control" id="timetoShip" placeholder="Time to Ship"
+                  formControlName="TimetoShip" />
+
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Max Sale Quantity:</label>
+                <input type="text" class="form-control" id="MaxSaleQuantity" placeholder="Max Sale Quantity"
+                  (keypress)="validator.numberOnly($event)" formControlName="MaxSaleQuantity" />
+              </div>
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Min Sale Quantity:</label>
+                <input type="text" class="form-control" id="MinSaleQuantity" placeholder="Min Sale Quantity"
+                  (keypress)="validator.numberOnly($event)" formControlName="MinSaleQuantity" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Pack Size:</label>
+                <input type="text" class="form-control" id="packSize" placeholder="Pack Size"
+                  (keypress)="validator.numberOnly($event)" formControlName="packSize" />
+              </div>
+
+              <div class="col-md-4 mt-3">
+                <label class="form-label">Weight:</label>
+                <input type="text" class="form-control" id="weight" placeholder="Weight"
+                  (keypress)="validator.numberOnly($event)" formControlName="Weight" />
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="danger-pills-tabContent" *ngIf="productDesc">
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body my-3">
+              <h5>Other Details</h5>
+              <div class="row mt-1">
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Common Name Of Commodity:</label>
+                  <input type="text" class="form-control" id="commonNameofCommodity"
+                    placeholder="common Name Of Commodity" formControlName="commonNameofCommodity" />
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Manufacturer Name:</label>
+                  <input type="text" class="form-control" id="manufacturerName" placeholder="Manufacturer Name"
+                    formControlName="manufacturerName" />
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Manufacturer Address:</label>
+                  <input type="text" class="form-control" id="manufacturerAddress" placeholder="Manufacturer Address"
+                    formControlName="manufacturerAddress" />
+
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Manufacture Date:</label>
+                  <input type="date" class="form-control" id="manufacturedate" placeholder="Manufacture date"
+                    formControlName="manufacturedate" />
+
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Country of Origin:</label>
+                  <input type="text" class="form-control" id="countryOfOrigin" placeholder="Country Of Origin"
+                    formControlName="countryOfOrigin" />
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Marketed By:</label>
+                  <input type="text" class="form-control" id="marketedBy" placeholder="Marketed By"
+                    formControlName="marketedBy" />
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Marketer Address:</label>
+                  <input type="text" class="form-control" id="marketedAddress" placeholder="Marketed Address"
+                    formControlName="marketedAddress" />
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">is Vegetarian:</label>
+                  <select class="form-select" formControlName="isVegetarian">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Ingredients:</label>
+                  <input type="text" class="form-control" id="ingredients" placeholder="ingredients"
+                    formControlName="ingredients" />
+
+                </div>
+                <div class="mt-3 d-block col-md-12" *ngIf="productDesc?.nutritionalInfo?.length>0">
+                  <label class="form-label">Nutritional Info:</label>
+                  <div class="edit-control-container d-inline">
+                    <table class="nutritional-info-table">
+                      <thead>
+                        <tr>
+                          <th>Nutrient</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let nutrient of productDesc?.nutritionalInfo">
+                          <td>{{ nutrient.name }}</td>
+                          <td>{{ nutrient.value }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Brand Owner Name:</label>
+                  <input type="text" class="form-control" id="brandOwnerName" placeholder="Brand Owner Name"
+                    formControlName="brandOwnerName" />
+
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Brand Owner Address:</label>
+                  <input type="text" class="form-control" id="brandOwnerAddress" placeholder="Brand Owner Address"
+                    formControlName="brandOwnerAddress" />
+
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Brand Owner FSSAI License No:</label>
+                  <input type="text" class="form-control" id="brandOwnerFSSAILicenseNo"
+                    placeholder="Brand Owner FSSAI License No" formControlName="brandOwnerFSSAILicenseNo" />
+
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Other FSSAI License No:</label>
+                  <input type="text" class="form-control" id="otherFSSAILicenseNo" placeholder="Other FSSAI License No"
+                    formControlName="otherFSSAILicenseNo" />
+
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Importer Name:</label>
+                  <input type="text" class="form-control" id="importerName" placeholder="Importer Name"
+                    formControlName="importerName" />
+                </div>
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Importer Address:</label>
+                  <input type="text" class="form-control" id="importerAddress" placeholder="Importer Address"
+                    formControlName="importerAddress" />
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Imported Country:</label>
+                    <input type="text" class="form-control" id="importedCountry" placeholder="Imported Country"
+                      formControlName="importedCountry" />
+
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Importer FSSAI License No:</label>
+                    <input type="text" class="form-control" id="importerFSSAILicenseNo"
+                      placeholder="Importer FSSAI License No" formControlName="importerFSSAILicenseNo" />
+
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Imported Country Of Origin:</label>
+                    <input type="text" class="form-control" id="importedCountryofOrigin"
+                      placeholder="Imported Country ONDCForm Origin" formControlName="importedCountryofOrigin" />
+
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Other Importer Name:</label>
+                    <input type="text" class="form-control" id="otherImporterName" placeholder="Other Importer Name"
+                      formControlName="otherImporterName" />
+
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Other Importer Address:</label>
+                    <input type="text" class="form-control" id="otherImporterAddress"
+                      placeholder="Other Importer Address" formControlName="otherImporterAddress" />
+
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Other Premises:</label>
+                    <input type="text" class="form-control" id="otherPremises" placeholder="Other Premises"
+                      formControlName="otherPremises" />
+
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Other Importer Country Of Origin:</label>
+                    <input type="text" class="form-control" id="otherImporterCountryofOrigin"
+                      placeholder="Other Importer Country of Origin" formControlName="otherImporterCountryofOrigin" />
+
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">Best Before:</label>
+                    <input type="date" class="form-control" id="bestBefore" formControlName="bestbefore" />
+                  </div>
+
+                  <div class="col-md-4 mt-3">
+                    <label class="form-label">For Complaints/Feedback:</label>
+                    <input type="text" class="form-control" id="complaints" placeholder="Complaint or Feedback"
+                      formControlName="complaintorfeedback" />
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body my-3 describe_panel">
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <div class="descri_copy position-relative">
+                      <h5>Long Description</h5>
+                      <a class="" role="button">
+                        <i class='bx bx-copy' (click)="copyToClipBoard(longDescription)"></i>
+                      </a>
+                    </div>
+                    <textarea class="transcribed-content-non-edit w-100" [value]="longDescription||''"
+                      (input)="setDescriptionValue('longDescription',$event)"></textarea>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-group">
+                    <div class="descri_copy position-relative">
+                      <h5>Short Description</h5>
+                      <a class="" role="button">
+                        <i class='bx bx-copy' (click)="copyToClipBoard(shortDescription)"></i>
+                      </a>
+                    </div>
+                    <textarea class="transcribed-content-non-edit w-100" [value]="shortDescription||''"
+                    (input)="setDescriptionValue('shortDescriptions',$event)"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-right mb-5">
+          <button type="submit" class="btn btn-primary text-white px-3" [disabled]="dataservice.isAPICalling">
+            Save & Update
+            <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+              aria-hidden="true"></span>
+          </button>
+        </div>
+</form>

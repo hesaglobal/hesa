@@ -1,0 +1,125 @@
+<div class="card radius-15">
+  <div class="card-body">
+    <div class="card-title ps-3">
+      <div class="row">
+        <div class="col-9">
+          <h4 class="mb-0">Customers</h4>
+        </div>
+        <div class="col-3 ms-auto text-end">
+          <button class="btn btn-primary text-white  px-3" (click)="addCustomer()">
+            <i class="bx bx-plus-circle mr-1"></i>
+            Add Customer</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="card border-top border-0 border-4 border-primary d-none">
+      <div class="card-body">
+        <table class="table table-striped" width="1--%">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Name</th>
+              <th scope="col">Contact</th>
+              <th scope="col">Address</th>
+              <th scope="col">Linked with Hesaathi</th>
+              <th scope="col">Hesaathi Type</th>
+              <th scope="col">Type</th>
+              <th scope="col">GST Treatment</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of customers;index as i">
+              <td class="text-capitalize align-middle">{{customer.createdAt | dateformat :'MMM DD YYYY hh:mm A' }}</td>
+              <td class="text-capitalize align-middle">{{customer.name}}</td>
+              <td class="text-capitalize align-middle">{{customer.contact}}</td>
+              <td class="text-capitalize align-middle">{{customer.location?.locationName}}</td>
+              <td class="text-capitalize align-middle">{{customer.hesaathiLinking}}</td>
+              <td class="text-capitalize align-middle">{{customer.hesaathiName}}</td>
+              <td class="text-capitalize align-middle">{{customer.type}}</td>
+              <td class="text-capitalize align-middle">{{customer.GSTTreatment}}</td>
+              <td class="text-end pt-3" >
+                <i class='bx bxs-edit-alt text-primary cursor-pointer box-icon-size ' (click)="editCustomer(customer._id)"></i>
+                <i class='bx bxs-trash  text-danger cursor-pointer box-icon-size ' (click)="deleteCustomer(customer._id,customer.name)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="customers?.length > 0" class="row justify-content-center m-0 pt-3">
+          <div class="col-auto d-flex justify-content-center text-center">
+            <ngb-pagination [pageSize]="pageSize" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+              [rotate]="true" [boundaryLinks]="true">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12" *ngFor="let customer of customers;index as i">
+        <div class="card table_card_view">
+          <div class="card-body">
+            <div class="top_g_bar">
+               <h6 class="text-capitalize">{{customer.name}} <span class="type_tag">{{customer.type}}</span></h6>
+               <div class="act_button">
+                <i class="bx bxs-edit text-primary cursor-pointer" (click)="editCustomer(customer._id)"></i>
+                <i class="bx bxs-trash text-primary cursor-pointer" (click)="deleteCustomer(customer._id,customer.name)"></i>
+               </div>
+            </div>
+            <div class="card_in">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="innr_bg">
+                  <div class="ls_type">
+                    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABSUlEQVR4nO1YQU7DMBD0P8qxcEvKuT+Ac6VkY4kPlI9VUd9SvpDFm1MjQT+wyFapqgCtHUwcpB1pTpZ2drzj2IpSAsH4AIDHsixfLYuieEhdJxhWEAD4SExdJxhnoo6p63wL1tkNV3nNVX5gnfM5+8L9dV/CtTpOO9sy3N+q4OZ13g0WjmVAn9jx02Lmb8DufBzhWAaYq2wTYuAwOQM6ewuI0GXhNaxOos+wGmxgHVgnmoFdtXSCli/VcrCBXWCdaAZSUYkBLRPgUSKE1PIUqcQAyQRYIuSDa7vUf8N8MtY6/vUhFgMgE7gMiRBM/BCjPCXatG8h+GVEfnptohg4QiYAEiGWQ4wT+O6jXGT0Xy8yQ++pm8UvJP+fu42h7QQN1N4GjDF3DbX79E23jg21HSLOvQ24GCHOkGiTNE7GalMd3LxAIBCosfABpS2eohAALn8AAAAASUVORK5CYII="> {{customer.createdAt | dateformat :'MMM DD YYYY hh:mm A' }}</p>
+                  </div>
+
+                  <div class="ls_type">
+                    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACGklEQVR4nO2YPWgUQRiGx0IUbe2MoJ2FtyEGLMVSsRNs9gLGQkggCDYWWiSF2ImtZ3Nw57zvuOUVVyp2CQFBJJAioFyCKP6BhBD/MjJwF2TIyewuubtP5oGvvLn3uZnZ/e5TKhKJRCL7BYBrJL+QtP+oDySvhKxnq+OXbVrZsNXEBlWarNu0cqmwQED4Xr0PEnCBQsNXd6tTRsCGVpBA/vDWVRmB39IFfogWALAlXWBDtADJl9IFnooWAHBzBAQ6ZQQmAgXu7JNAx04lFwsLdCVW+wUHsAPgVuhau8HSZF4NCgDz/cKTnMuz1sDDO5rN5hiAbS/8TwBTKie2WllQw4DkI28HFpUkSJ78exfc8dFaTypJALjnHaOVer1+WEmh1WodAfDGk3igJGGMOQ/glydxQ0mC5H1P4DvJC0oKtVrtIIAXnsQ3rfU5JQWt9TEAa57EZwCJkoLW+jTJT76EqJ0wxpz1JxfuOIXcCZJ3A5rE4JFNYdwvTvKrf7GNMdf7fcY1gKFtOgNHNqUwxpwhub7Hlz9st9uHvPAz3UYwVKD4H5o8kDxB8tUeXevr3r3oTvqCRzUcpICj0WgcBfCkT+u97L8EOWoCPUjOktwsEpajIODIsuwUgGdlwwPYUcPCWnvAGHOV5FuRAl4ne5vkO5ECPdwjleQ0gOc5nkYf1SiSZdlxJ0PyMcklAB3/hdhtVdJhZ41EIpH/mD82hQWzmdhZQQAAAABJRU5ErkJggg=="> {{customer.contact}}</p>
+                  </div>
+
+                  <div class="ls_type">
+                    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADaUlEQVR4nO1XXUhUQRS+BQX9vhTUQ0FWkplz1xCkh0DroXozIqmduxL9GNFDvfQDFhQkBEVvPvZSQc/5ExFUmgsR9AOSPYjUOnPnzK6YRVliap6Yuyqle+91791mJfaDDy6ze85838yZM/caRgEFFFDAfwOMVqxGSuqRms1ISQ9S8n2SPc6YRU5gXckqY74BY+YytMhVtMwhtEz0JDW/ITWv4MmKpcZ8AB7ath6p+cZX+Gx2Ycwsyq94SjYiJf0BxE8xlTcTeGzLCqTkfQjxkyVF3mFt6XL9Bii5Hlq8Nc1resUfKV2LFhn2EPQAo2VVzuF2DnikGi3S4rELP/Bw2Rp9Bixy2kPMRY+4Bo/udEqfAUoeua28b6xFWl1iH+pR74gwP2QUES2r8o2lkV0uO9CrR316FTPX/xy6idO9XM6BoQtIyZfABqzKlS4lNKhzB+KZRUSqfWNj5u7MsSSucwcuu4homUNsm0sJXda5A+vQIuMuJhoCGB9XObUZSItRr8duFxlpdbpNbelyh6ps3FbecjpQs1bxjgErsid3rxKRPdoNOCYoaQ8vnug7vLMMRM2doQ1E/S+/f2vCq7b9SElbXsU7BqLlxUjNkQAGfmK0rMSYD0BqNs77bwAvYO2OJa4veJnbJlPfCUY+0d3dvZhJWWED1HOAW59a7j7HWMRffCyCg833OlSMDVCvcqhcWkQnpNzKAC5yIeMcYJSDxD851NTga2Co6dJfMdwhjHIhOznABTVHTkUj4sI+Wx5Mi5458d+0+xI4dnafq/ixM3vR/vjBMwdXFLLTlvIAIi4IJZ6x/k1MwHPfCf9g6sVTxLryDKVTjv3xx3POw0EiA2hnqdTGQOL7kskiLiCVzYRT/Hq7cZYBNRYkFxNygHO+OWsD6ZrMfkKnlBjD0XM10+LVsxoLmo8J6MjaAAM5HHRCRdn1CieO7cCJo5WYfPsycB7ulJIczt6AgI4wkyoOttxxGDYPA3iWtYFEMrkh6BnIJZmQA6qZZG1g2gTIJ3kzIGSnbdvFRhioXswB9ueipOa+6tDBAGpC3wMzkQAo4SJ5ftLMzxyKHlE9X+VWcxg68Po1LkoIsZ0DHGcAN5mQ99VtzUD2Tp6dz0zAL0X1rMbSv8m4+i8DuKFihRDlKpcW0QUUUEABRq7xGxTe7SkDz+qhAAAAAElFTkSuQmCC"> {{customer.location?.locationName}}</p>
+                  </div>
+                </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="innr_bg">
+                  <div class="ls_type">
+                    <label>Linked with Hesaathi <p>{{customer.hesaathiLinking}}</p></label>
+                  </div>
+                  
+                  <div class="ls_type">
+                    <label>Hesaathi Type <p>{{customer.hesaathiName}}</p></label>
+                  </div>
+                  
+                  <div class="ls_type">
+                    <label>GST Treatment <p>{{customer.GSTTreatment}}</p> </label>
+                    
+                  </div>
+                </div>
+              </div>
+              </div>
+              
+
+              
+
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+      <div *ngIf="customers?.length > 0" class="row justify-content-center m-0 pt-3">
+        <div class="col-auto d-flex justify-content-center text-center">
+          <ngb-pagination [pageSize]="pageSize" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true">
+          </ngb-pagination>
+        </div>
+      </div>
+
+      
+    </div>

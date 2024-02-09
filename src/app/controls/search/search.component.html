@@ -1,0 +1,7 @@
+<input id="searchbox" [placeholder]="placeholder" type="text"  [(ngModel)]="searchtext" [value]='value' class="form-control" (keyup)="search($event)"
+autocomplete="off" (blur)="onBlur()"/>
+<ul class="list-group" *ngIf="model.showResults" style="position: absolute; z-index: 99999;">
+  <ng-container *ngFor="let option of model.list">
+    <li class="list-group-item" (click)="navigate(option)" [ngClass]="option.selected ? 'active' : '' "  [value]="option.key">{{option.value}}</li>
+  </ng-container>
+</ul>

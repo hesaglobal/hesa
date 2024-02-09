@@ -1,0 +1,49 @@
+<div class="card radius-15">
+  <div class="card-body">
+    <div class="card-title ps-3">
+      <h4 class="mb-0">Winners</h4>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-4">
+        <select class="form-select dropdown1" (change)="onContestChange($event.target.value)">
+          <option value="" class="dropdown">Contest</option>
+          <option class="dropdown" *ngFor="let contest of contests" [value]="contest._id">{{contest.title}}</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <select class="form-select dropdown1" (change)="onCategoryChange($event.target.value)">
+          <option value="" class="dropdown">Category</option>
+          <option class="dropdown" *ngFor="let category of categories" [value]="category._id">{{category.title}}</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <select class="form-select dropdown1" (change)="onAgeGroupChange($event.target.value)">
+          <option value="" class="dropdown">Age Group</option>
+          <option class="dropdown" *ngFor="let group of ageGroups" [value]="group._id">{{group.title}}</option>
+        </select>
+      </div>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Child</th>
+          <th scope="col">Parent</th>
+          <th scope="col">Upvotes</th>
+          <th scope="col">Rank</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let winner of winners; let rank = index">
+          <td class="text-capitalize"> {{ winner.child?.name }} </td>
+          <td class="text-capitalize"> {{ winner.parent?.name }} </td>
+          <td> {{ winner.upvotes }} </td>
+          <td> {{ rank + 1 }} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

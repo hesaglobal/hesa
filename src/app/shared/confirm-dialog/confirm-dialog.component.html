@@ -1,0 +1,18 @@
+<div *ngIf="message" class="modal" tabindex="-1" role="dialog" style="display:block!important">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header  py-1">
+        <h4 class="modal-title" id="modal-title">Confirmation</h4>
+        <button type="button" class="btn-close" aria-describedby="modal-title"
+        (click)="message.noFn()"></button>
+      </div>
+      <div class="modal-body">
+        <p [innerHTML]="message.text"></p>
+      </div>
+      <div class="modal-footer  py-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="message.noFn()">No</button>
+        <button type="button" class="btn btn-primary text-white btn-sm" (click)="message.yesFn()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,212 @@
+.speak_btn {
+    border-radius: 25px;
+    background-color: #ff5b2e;
+    border: 1px solid #ff5b2e;
+    padding: 10px 37px;
+    margin-right: 10px;
+    color: #fff;
+    font-size: 16px;
+    transition: .3s;
+    -webkit-box-shadow: 0 19px 40px -10px #ffe0d2;
+    box-shadow: 0 19px 40px -10px #ffe0d2;
+    // -webkit-box-shadow: 4px 3px 0px 0px rgba(43, 35, 80, 1);
+    // -moz-box-shadow: 4px 3px 0px 0px rgba(43, 35, 80, 1);
+    // box-shadow: 4px 3px 0px 0px rgba(43, 35, 80, 1);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+audio{width: 225px;}
+
+.spk_haed p i {
+    font-size: 13px;
+    color: #787878;
+}
+.disable-button{
+    pointer-events: none !important;
+    cursor:not-allowed !important;
+    opacity: 0.5;
+  }
+
+.stop_bt.speak_btn{
+    background-color: #fff;
+    border: 1px solid #30303c;
+    color: #30303c;
+}
+
+.stop_bt.speak_btn:hover{
+    background-color: #30303c;
+    border: 1px solid #30303c;
+    color: #fff;
+}
+
+.change{ -webkit-animation: waves 3s ease-in-out infinite; animation: waves 3s ease-in-out infinite; background: #218121a1 !important;}
+
+textarea.textOutput {
+    border: 1px solid #228B22;
+    border-radius: 20px;
+    transition: .3s;
+    background: rgba(34, 139, 34, 0.1)
+}
+
+
+.record-button-margin{
+    margin-right: 20px !important;
+}
+.speak_btn:hover {
+    background-color: #fff;
+    border: 1px solid #ff5b2e;
+    color: #ff5b2e;
+}
+
+
+
+
+@keyframes waves {
+    0% {
+        -webkit-transform: scale(0.2, 0.2);
+        transform: scale(0.2, 0.2);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+
+    50% {
+        opacity: 0.9;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    }
+
+    100% {
+        -webkit-transform: scale(0.9, 0.9);
+        transform: scale(0.9, 0.9);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+}
+
+.fa-play:before {
+    content: "\f04b";
+}
+
+.waves {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    border-radius: 100%;
+    bottom: 15px;
+    left:764px;
+}
+
+.wave-1 {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+}
+
+.wave-2 {
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+}
+
+.wave-3 {
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
+}
+
+.icon-class{
+    font-size: 15px
+}
+
+// .speech-container-margin{
+//     margin-left: 650px;
+// }
+// .audio-container-buttons{
+//     margin-left:42px !important;
+// }
+.card-title{
+    margin-left: 20px !important;
+}
+.waves-bottom{
+    bottom:430px !important;
+}
+
+.wd_csm {
+    width: 85%;
+    margin: 0 auto;
+}
+
+a.image_rmv i {
+    font-size: 14px;
+    background-size: 100%;
+  }
+  
+  a.image_rmv {
+    background: #ddd;
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    text-align: center;
+    line-height: 22px;
+    border-radius: 25px;
+    position: absolute;
+    z-index: 9;
+    right: 65px;
+    top: 15px;
+    cursor: pointer;
+  }
+  .chat_box_outer .sound-wave {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.chat_box_outer .bar {
+	animation-name: wave-lg;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	animation-direction: alternate;
+	background: linear-gradient(#090958, #C63B14);
+	margin: 0 1.5px;
+	height: 10px;
+	width: 1px;
+}
+  .chat_box_outer .bar:nth-child(-n+7),
+body .bar:nth-last-child(-n+7) {
+	animation-name: wave-md;
+}
+.chat_box_outer .bar:nth-child(-n+3),
+body .bar:nth-last-child(-n+3) {
+	animation-name: wave-sm;
+}
+
+@keyframes wave-sm {
+	0% {
+		opacity: 0.35;
+		height: 10px;
+	}
+	100% {
+		opacity: 1;
+		height: 25px;
+	}
+}
+@keyframes wave-md {
+	0% {
+		opacity: 0.35;
+		height: 15px;
+	}
+	100% {
+		opacity: 1;
+		height: 40px;
+	}
+}
+@keyframes wave-lg {
+	0% {
+		opacity: 0.35;
+		height: 15px;
+	}
+	100% {
+		opacity: 1;
+		height: 60px;
+	}
+}

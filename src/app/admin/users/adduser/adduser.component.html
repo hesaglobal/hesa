@@ -1,0 +1,218 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Users</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-primary"></i></a>
+        </li>
+
+        <li class="breadcrumb-item active" aria-current="page">{{mode}} User</li>
+      </ol>
+
+    </nav>
+  </div>
+  <div class="ms-auto">
+    <button [routerLink]="['/admin/users']" class="btn btn-primary px-5 text-white"><i class="bx bx-hive mr-1"></i>View
+      Users</button>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="tab-content" id="danger-pills-tabContent">
+
+      <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+        <div class="card border-top border-0 border-4 border-primary">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-center">
+              <div><i class="bx bxs-user me-1 font-22 text-primary"></i> </div>
+              <h5 class="mb-0 text-primary">{{(mode == 'Add')? 'User' :
+                'Edit User'}} </h5>
+            </div>
+
+            <form class="row g-3" [formGroup]="addUserForm" (submit)="onSubmit()">
+
+              <div class="col-md-2">
+                <label for="name" class="form-label">Name*</label>
+                <div class="input-group">
+                  <input type="text" maxlength="30" class="form-control" placeholder="Name"
+                    formControlName="name" />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Name is required
+                    </div>
+                    <div *ngIf="f.name.errors.whitespace && !f.name.errors.required">
+                      Please enter name </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="displayName" class="form-label">Invoice Display Name*</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Display Name"
+                    formControlName="displayName" />
+                  <div *ngIf="submitted && f.displayName.errors" class="invalid-feedback">
+                    <div *ngIf="f.displayName.errors.required">Name is required
+                    </div>
+                    <div *ngIf="f.displayName.errors.whitespace && !f.displayName.errors.required">
+                      Please enter display name </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="Contactno" class="form-label">Mobile *</label>
+                <div class="input-group">
+
+                  <input type="text" maxlength="10"  (keypress)="validator.mobileNumberOnly($event)"  class="form-control" placeholder="Mobile" [readonly]="mode == 'Edit' ? true : null"
+                    formControlName="phoneNo" />
+                  <div *ngIf="submitted && f.phoneNo.errors" class="invalid-feedback">
+                    <div *ngIf="f.phoneNo.errors.required">Mobile is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="title" class="form-label">Email*</label>
+                <div class="input-group">
+                  <input type="text" maxlength="50" class="form-control" id="title" placeholder="Email" [readonly]="mode == 'Edit' ? true : null"
+                    formControlName="email" />
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required
+                    </div>
+                    <div *ngIf="f.email.errors.whitespace && !f.email.errors.required">
+                      Please enter valid email </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="name" class="form-label">GSTIN*</label>
+                <div class="input-group">
+                  <input type="text" minlength="15" maxlength="15" class="form-control" placeholder="GSTIN" formControlName="gstin"
+                    />
+                  <div *ngIf="submitted && f.gstin.errors" class="invalid-feedback">
+                    <div *ngIf="f.gstin.errors.required">GSTIN is required
+                    </div>
+                    <div *ngIf="f.gstin.errors.pattern">Invalid GSTIN format</div>
+                    <div *ngIf="f.gstin.errors.minlength">
+                      This field must be minimum of 15 characters </div>
+                      <div *ngIf="f.gstin.errors.whitespace && !f.gstin.errors.required">
+                        Please enter GSTIN </div>
+                   </div>
+                  </div>
+                </div>
+              <div class="col-md-2">
+                <label for="title" class="form-label">Gender</label>
+                <div class="input-group">
+                  <select class="form-select" formControlName="gender" >
+                    <option [value]="item.name" *ngFor="let item of gender">{{item.name}}</option>
+                  </select>
+
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <label for="name" class="form-label">Invoice Address*</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Address to be printed on invoice"
+                    formControlName="invoiceaddress" />
+                  <div *ngIf="submitted && f.invoiceaddress.errors" class="invalid-feedback">
+                    <div *ngIf="f.invoiceaddress.errors.required">Invoice Address is required
+                    </div>
+                    <div *ngIf="f.invoiceaddress.errors.whitespace && !f.invoiceaddress.errors.required">
+                      Please enter Invoice Address </div>
+                  </div>
+                </div>
+              </div>
+                <div class="col-md-2 pb-2">
+                  <label for="parentPic" class="form-label">Profile pic</label>
+                  <div class="input-group">
+                    <app-upload-image formControlName="pic" [className]="'rectangle'"></app-upload-image>
+                  </div>
+                </div>
+
+              <div class="col-md-2">
+                <label for="location" class="form-label">Location</label>
+                <div class="input-group">
+                  <!-- <app-locationold style="width:100%" (locationData)=addLocation($event)
+                    [placeholder]="'Please enter your Location'"></app-locationold> -->
+                    <app-location style="width:100%"  formControlName="location" [placeholder]="'Select location'"></app-location>
+
+                </div>
+              </div>
+              <div class="col-md-2" *ngIf="mode == 'Edit'">
+                <label for="password" class="form-label">Allocate coins</label>
+                <input type="number" maxlength="4" class="form-control" placeholder="Allocate coins"
+                formControlName="allocateCoins" />
+              </div>
+              <ng-container formGroupName="pwGroup" *ngIf="mode == 'Add'">
+                <div class="col-md-4">
+                  <label for="password" class="form-label">Password*</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+                    <div *ngIf="submitted && pwGroup.controls.password.errors" class="invalid-feedback">
+                      <div *ngIf="pwGroup.controls.password.errors.required">Password is required
+                      </div>
+                      <div *ngIf="pwGroup.controls.password.errors.minlength && !pwGroup.controls.password.errors.required">
+                        Password must be minimum of 6 characters </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="confirmpassword" class="form-label">Confirm Password*</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" placeholder="Confirm Password"
+                      formControlName="confirmpassword" />
+                      <div *ngIf="submitted && f.pwGroup.errors?.passwordNotMatch" class="invalid-feedback">
+                        <div>Password and confirm password should match
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </ng-container>
+              <div class="col-md-2 pb-2">
+                <label for="logo" class="form-label">Upload Logo</label>
+                <div class="input-group">
+                  <app-upload-image formControlName="logo" [className]="'rectangle'"></app-upload-image>
+                </div>
+              </div>
+
+              <div class="col-md-2 pb-2">
+                <label for="logo" class="form-label">Upload QR Code</label>
+                <div class="input-group">
+                  <app-upload-image formControlName="qr" [className]="'rectangle'"></app-upload-image>
+                  <div *ngIf="submitted && f.qr.errors" class="invalid-feedback">
+                    <div *ngIf="f.qr.errors.required">QR Code is required
+                    </div>
+                  </div>
+                </div>
+                </div>
+              <div class="col-md-2">
+                <label for="title" class="form-label">Module*</label>
+                <div class="input-group">
+                  <app-multiselect style="width:100%" formControlName="modules"  [defaultvalue]="modules" [list]="module" [placeholder]="'Select Modules'"></app-multiselect>
+
+                  <div *ngIf="submitted && f.modules.errors" class="invalid-feedback">
+                    <div *ngIf="f.modules.errors.required">Module is required
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-12 my-3 text-right">
+                <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                  {{mode=='Edit' ? 'Update' : 'Save'}}
+                  <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                    aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

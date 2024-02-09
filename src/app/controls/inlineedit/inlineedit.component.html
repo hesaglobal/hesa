@@ -1,0 +1,27 @@
+
+<span class="inlineedit cursor-pointer" [ngbPopover]="popContent"
+[popoverTitle]="title" #p="ngbPopover" [autoClose]="false" triggers="manual" (click)="p.open()">{{item.value}}</span>
+<ng-template #popContent>
+  <div class="custom-popover-content">
+  <form class="row g-3">
+
+    <div class="col-md-12">
+      <label for="Contactno" class="form-label">{{item.key}} *</label>
+      <div class="input-group">
+        <input [ngClass]="controltype==='textbox'? 'show': 'hide'" type="text"  class="form-control" [value]="item.value" />
+        <textarea [ngClass]="controltype==='textarea'? 'show': 'hide'"
+                    class="form-control"
+                    [value]="item.value"
+                    rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-12 my-3 d-flex justify-content-end">
+      <button type="submit" (click)="onSubmit(item)" class="btn btn-primary text-white popover_btn">
+        <span>Update</span>
+      </button>
+      <button type="reset" class="btn btn-danger text-white popover_btn" (click)="p.close()">Close</button>
+    </div>
+  </form>
+  </div>
+</ng-template>

@@ -1,0 +1,17 @@
+
+<ng-container  *ngIf="files.length==0||shouldReset">
+  <h6 class="text-center mb-3">Upload Product Images</h6>
+  <input type="file" accept="image/png, image/jpeg, image/jpg" (change)="onFileChange($event)"
+  [class]="image-width ? 'image-width form-control': 'form-control'" placeholder="Upload category icon" [multiple]="(maxLimit>1)"/>
+</ng-container>
+<div *ngIf="files.length > 0" class="row">
+  <div class="col">
+    <div *ngFor="let file of files; let i = index" class="image-container mr-1 ">
+      <img [src]="file.url" height="50px" width="50px" class="{{className}} p-1 bg-primary">
+      <a class="image_rmv" (click)="removeImage(i)">
+        <i class="btn-close me-0"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<div *ngIf="hasError" class="text-danger py-1">{{errorMsg}}</div>

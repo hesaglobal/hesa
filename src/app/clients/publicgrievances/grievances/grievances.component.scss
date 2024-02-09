@@ -1,0 +1,29 @@
+.lang_btn{
+    padding: 4px!important;
+}
+.disabled-button{
+    background-color: #c5bcbc !important;
+    pointer-events: none;
+    border-color: #c5bcbc!important;
+    }
+   .iconsize {
+    font-size: x-large;
+    vertical-align: middle;
+   }
+
+   .dev_btn{
+   padding: 2px 6px !important;
+   margin:3px !important;   
+}
+.message-overflow-class div{
+    white-space: nowrap; 
+    width: 100px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+ }
+ 
+ .urgency-type{
+    border-radius: 50%;
+    width: 16px !important;
+    height: 16px !important;
+ }

@@ -1,0 +1,22 @@
+b {
+    font-size: 15px !important;
+}
+
+.message-overflow-class div {
+    white-space: nowrap;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.box-icon-size{
+    font-size: 20px !important;
+}
+.actions-div{
+    position: relative;
+}
+.del-btn-div{
+    position: absolute;
+    right: 15px;
+    top: 14px;
+}

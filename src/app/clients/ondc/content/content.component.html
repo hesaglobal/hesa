@@ -1,0 +1,392 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Description</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-primary"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Description</li>
+      </ol>
+
+    </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="tab-content" id="danger-pills-tabContent">
+
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body my-3">
+              <h5>Uploaded Files</h5>
+              <div class="row">
+                <div class="col-6">
+                  <div class="image-container">
+                    <div *ngFor="let image of uploadedImages" class="image-item">
+                      <img [src]="baseURL + image.url" alt="Image" class="uploaded-image">
+                      <a href="javascript:void(0)"><i class="btn-close"></i></a>
+                    </div>
+                  </div>
+                 
+                </div>
+                <div class="col-6" *ngIf="uploadedAudio&&uploadedAudio[0]?.url">
+                  <audio controls class="mt-2">
+                    <source [src]="baseURL+uploadedAudio[0].url" type="audio/wav">
+                  </audio>
+                </div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+    <div class="card border-top border-0 border-4 border-primary">
+    <div class="card-body my-3">
+      <h5>Basic Details</h5>
+
+      <div class="row mt-1">
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Product ID:</label>
+          <input readonly type="text" id="" value="258" required="" class="form-control">
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Item Name:</label>
+          <app-editcontrol title="Edit Item Name" [doneAction]="updateResult" [item]="{key:'itemName', value:productDesc?.itemName||''}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Category:</label>
+          <select class="form-select">
+            <option value="">Foodgrains</option>
+          </select>
+          <!-- <app-editcontrol title="Edit Category" [doneAction]="updateResult" [item]="{key:'Category', value:productDesc?.Category||''}"></app-editcontrol> -->
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Sub Category:</label>
+          <select class="form-select">
+            <option value="">Foodgrains</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Brand Name:</label>
+          <input type="text" id="" value="" required="" class="form-control">
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">EAN Code:</label>
+          <input type="text" id="" value="" required="" class="form-control">
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+    <div class="card border-top border-0 border-4 border-primary">
+    <div class="card-body my-3">
+      <h5>Pricing / Quantity & Shipping</h5>
+      
+      <div class="row mt-1">
+        <div class="col-md-4 mt-3">
+        <label class="form-label">Selling Price:</label>
+        <app-editcontrol title="Edit Price" [doneAction]="updateResult" [item]="{key:'Price', value:productDesc?.Price||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Max Retail Price (MRP):</label>
+          <app-editcontrol title="Max Retail Price" [doneAction]="updateResult" [item]="{key:'MaxRetailPrice', value:productDesc?.MaxRetailPrice||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Price Per Gram:</label>
+          <app-editcontrol title="Edit Price" [doneAction]="updateResult" [item]="{key:'Price', value:productDesc?.Price||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Purchase Price:</label>
+          <app-editcontrol title="Selling Price" [doneAction]="updateResult" [item]="{key:'SellingPrice', value:productDesc?.SellingPrice||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">SGST Tax Rate:</label>
+          <app-editcontrol title="SGST Tax Rate" [doneAction]="updateResult" [item]="{key:'SGSTTaxRate', value:productDesc?.SGSTTaxRate||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">CGST Tax Rate:</label>
+          <app-editcontrol title="CGST Tax Rate" [doneAction]="updateResult" [item]="{key:'CGSTTaxRate', value:productDesc?.CGSTTaxRate||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">IGST Tax Rate:</label>
+          <app-editcontrol title="IGST Tax Rate" [doneAction]="updateResult" [item]="{key:'IGSTTaxRate', value:productDesc?.IGSTTaxRate||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Total Tax Rate:</label>
+          <app-editcontrol title="Total Tax Rate" [doneAction]="updateResult" [item]="{key:'TotalTaxRate', value:productDesc?.TotalTaxRate||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Unit Denomination:</label>
+          <app-editcontrol title="Unit Denomination" [doneAction]="updateResult" [item]="{key:'UnitDenomination', value:productDesc?.UnitDenomination||''}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">UnitValue:</label>
+          <app-editcontrol title="Unit Value" [doneAction]="updateResult" [item]="{key:'UnitValue', value:productDesc?.UnitValue||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Quantity:</label>
+          <app-editcontrol title="Quantity" [doneAction]="updateResult" [item]="{key:'Quantity', value:productDesc?.Quantity||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Is Selling Price Exclusive of GST:</label>
+          <select class="form-select" (change)="updateONDCTypes('IsSellingPriceExclusiveofGST',$event)" [ngModel]="productDesc?.IsSellingPriceExclusiveofGST">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Returnable:</label>
+          <select class="form-select" (change)="updateONDCTypes('Returnable',$event)" [ngModel]="productDesc?.Returnable">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Return Window:</label>
+          <app-editcontrol title="Return Window" [doneAction]="updateResult" [item]="{key:'ReturnWindow', value:productDesc?.ReturnWindow||''}"></app-editcontrol>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Seller Pickup Return:</label>
+          <select class="form-select" (change)="updateONDCTypes('SellerPickupReturn',$event)" [ngModel]="productDesc?.SellerPickupReturn">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Cancellable:</label>
+          <select class="form-select" (change)="updateONDCTypes('Cancellable',$event)" [ngModel]="productDesc?.Cancellable">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">COD Availability:</label>
+          <select class="form-select" (change)="updateONDCTypes('CODAvailability',$event)" [ngModel]="productDesc?.CODAvailability">
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Time to Ship:</label>
+          <app-editcontrol title="Time to Ship" [doneAction]="updateResult" [item]="{key:'TimetoShip', value:productDesc?.TimetoShip||0}"></app-editcontrol>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Max Sale Quantity:</label>
+          <app-editcontrol title="Max Sale Quantity" [doneAction]="updateResult" [item]="{key:'MaxSaleQuantity', value:productDesc?.MaxSaleQuantity||0}"></app-editcontrol>
+        </div>
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Min Sale Quantity:</label>
+          <app-editcontrol title="Min Sale Quantity" [doneAction]="updateResult" [item]="{key:'MinSaleQuantity', value:productDesc?.MinSaleQuantity||0}"></app-editcontrol>
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Pack Size:</label>
+          <input type="text" id="" value="" class="form-control">
+        </div>
+
+        <div class="col-md-4 mt-3">
+          <label class="form-label">Weight:</label>
+          <input type="text" id="" value="" class="form-control">
+        </div>
+    </div>
+      
+
+    </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="danger-pills-tabContent" *ngIf="productDesc">
+    <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+      <div class="card border-top border-0 border-4 border-primary">
+        <div class="card-body my-3">
+          <h5>Other Details</h5>
+          <div class="row mt-1">
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Common Name Of Commodity:</label>
+              <app-editcontrol title="Edit Common Name of Commodity" [doneAction]="updateResult" [item]="{key:'commonNameofCommodity', value:productDesc?.commonNameofCommodity||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Manufacturer Name:</label>
+              <app-editcontrol title="Edit Manufacturer Name" [doneAction]="updateResult" [item]="{key:'manufacturerName', value:productDesc?.manufacturerName||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Manufacturer Address:</label>
+              <app-editcontrol title="Edit Manufacturer Address" [doneAction]="updateResult" [item]="{key:'manufacturerAddress', value:productDesc?.manufacturerAddress||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Manufacture Date:</label>
+              <app-editcontrol title="Edit Manufacture Date" [doneAction]="updateResult" [item]="{key:'manufacturedate', value:productDesc?.manufacturedate||''}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Country of Origin:</label>
+              <input type="text" id="" value="" class="form-control">
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Marketed By:</label>
+              <input type="text" id="" value="" class="form-control">
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Marketer Address:</label>
+              <input type="text" id="" value="" class="form-control">
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">is Vegetarian:</label>
+              <select class="form-select" (change)="updateONDCTypes('isVegetarian',$event)" [ngModel]="productDesc?.isVegetarian">
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Ingredients:</label>
+              <app-editcontrol title="Edit Ingredients" [doneAction]="updateResult" [item]="{key:'ingredients', value:productDesc?.ingredients||[]}"></app-editcontrol>
+            </div>
+            <div class="mt-3 d-block col-md-12" *ngIf="productDesc?.nutritionalInfo?.length>0">
+                <label class="form-label">Nutritional Info:</label>
+                <div class="edit-control-container d-inline">
+                  <table class="nutritional-info-table">
+                    <thead>
+                      <tr>
+                        <th>Nutrient</th>
+                        <th>Value</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let nutrient of productDesc?.nutritionalInfo">
+                        <td>{{ nutrient.name }}</td>
+                        <td>{{ nutrient.value }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Brand Owner Name:</label>
+              <app-editcontrol title="Edit Brand Name" [doneAction]="updateResult" [item]="{key:'brandOwnerName', value:productDesc?.brandOwnerName||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Brand Owner Address:</label>
+              <app-editcontrol title="Edit Brand Address" [doneAction]="updateResult" [item]="{key:'brandOwnerAddress', value:productDesc?.brandOwnerAddress||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Brand Owner FSSAI License No:</label>
+              <app-editcontrol title="Edit Brand Owner License No" [doneAction]="updateResult" [item]="{key:'brandOwnerFSSAILicenseNo', value:productDesc?.brandOwnerFSSAILicenseNo||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Other FSSAI License No:</label>
+              <app-editcontrol title="Edit other FSSAI License No" [doneAction]="updateResult" [item]="{key:'otherFSSAILicenseNo', value:productDesc?.otherFSSAILicenseNo||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Importer Name:</label>
+              <app-editcontrol title="Edit Importer Name" [doneAction]="updateResult" [item]="{key:'importerName', value:productDesc?.importerName||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Importer Address:</label>
+              <app-editcontrol title="Edit Importer Address" [doneAction]="updateResult" [item]="{key:'importerAddress', value:productDesc?.importerAddress||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Imported Country:</label>
+              <app-editcontrol title="Edit Imported Country" [doneAction]="updateResult" [item]="{key:'importedCountry', value:productDesc?.importedCountry||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Importer FSSAI License No:</label>
+              <app-editcontrol title="Edit Importer FSSAI License No" [doneAction]="updateResult" [item]="{key:'importerFSSAILicenseNo', value:productDesc?.importerFSSAILicenseNo||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Imported Country Of Origin:</label>
+              <app-editcontrol title="Edit Importer Country of Origin" [doneAction]="updateResult" [item]="{key:'importedCountryofOrigin', value:productDesc?.importedCountryofOrigin||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Other Importer Name:</label>
+              <app-editcontrol title="Edit Importer Name" [doneAction]="updateResult" [item]="{key:'otherImporterName', value:productDesc?.otherImporterName||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Other Importer Address:</label>
+              <app-editcontrol title="Edit Importer Address" [doneAction]="updateResult" [item]="{key:'otherImporterAddress', value:productDesc?.otherImporterAddress||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Other Premises:</label>
+              <app-editcontrol title="Edit Other Premises" [doneAction]="updateResult" [item]="{key:'otherPremises', value:productDesc?.otherPremises||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Other Importer Country Of Origin:</label>
+              <app-editcontrol title="Edit Other Country of Origin" [doneAction]="updateResult" [item]="{key:'otherImporterCountryofOrigin', value:productDesc?.otherImporterCountryofOrigin||[]}"></app-editcontrol>
+            </div>
+            <div class="col-md-4 mt-3">
+              <label class="form-label">Best Before:</label>
+              <input type="text" id="" value="" class="form-control">
+            </div>
+
+            <div class="col-md-4 mt-3">
+              <label class="form-label">For Complaints/Feedback:</label>
+              <input type="text" id="" value="" class="form-control">
+            </div>
+            
+          </div>
+          </div>
+       
+      </div>
+    </div>
+  </div>
+
+
+  <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+    <div class="card border-top border-0 border-4 border-primary">
+      <div class="card-body my-3 describe_panel">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <div class="descri_copy position-relative">
+              <h5>Long Description</h5>
+              <a class=""  role="button">
+                <i class='bx bx-copy' (click)="copyToClipBoard(longDescription)"></i>
+              </a>
+              </div>
+              <div class="transcribed-content-non-edit" [innerText]="longDescription||''"></div>
+           </div>
+         </div>
+
+             <div class="col-6">
+              <div class="form-group">
+                <div class="descri_copy position-relative">
+                <h5>Short Description</h5>
+                <a class=""  role="button">
+                  <i class='bx bx-copy' (click)="copyToClipBoard(shortDescription)"></i>
+                </a>
+                </div>
+                <div class="transcribed-content-non-edit" [innerText]="shortDescription||''"></div>
+             </div>
+           </div>
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="text-right mb-5">
+          <button type="submit" class="btn btn-primary text-white px-3"> Save & Update</button>
+        </div>
+  
+

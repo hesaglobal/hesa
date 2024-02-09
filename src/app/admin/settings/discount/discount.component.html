@@ -1,0 +1,44 @@
+<div class="card radius-15">
+  <div class="card-body">
+    <div class="card-title ps-3">
+      <h4 class="mb-0">Discounts</h4>
+    </div>
+    <div class="ms-auto">
+      <a type="button" [routerLink]="['./add']" class="btn btn-primary text-white  px-3"><i
+          class="fadeIn animated bx bxs-discount"></i> + Add Discount</a>
+    </div>
+
+    <hr>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Discount Type</th>
+          <th scope="col">Discount/Amount</th>
+          <th scope="col">Coupon Name</th>
+          <th scope="col">Coupon Code</th>
+          <th scope="col">Limit</th>
+          <th scope="col">Valid Till</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let discount of discounts;">
+          <td class="text-capitalize">{{ discount.title }}</td>
+          <td class="text-capitalize">{{ discount.discountType }}</td>
+          <td>{{ discount.discount }}</td>
+          <td class="text-capitalize">{{ discount.couponName }}</td>
+          <td>{{ discount.couponCode }}</td>
+          <td>{{ discount.limit }}</td>
+          <td>{{ discount.validTill | dateformat }}</td>
+          <td width="10%">
+            <a href="javascript:" (click)="editDiscount(discount._id)"><i
+                class="text-primary fadeIn animated bx bx-edit-alt"></i></a>
+             | <a href="javascript:" (click)="showDialog(discount._id)"><i
+                class="text-primary fadeIn animated bx bx-trash-alt"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

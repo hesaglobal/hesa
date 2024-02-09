@@ -1,0 +1,131 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Discount</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item">
+          <a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt text-primary"></i></a>
+        </li>
+
+        <li class="breadcrumb-item active" aria-current="page">
+          {{ mode }} Discount
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div class="ms-auto">
+    <button [routerLink]="['/admin/setting/discount']" class="btn btn-primary px-5 text-white">
+      <i class="bx bx-hive mr-1"></i>View Discounts
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="tab-content" id="danger-pills-tabContent">
+      <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+        <div class="card border-top border-0 border-4 border-primary">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-center">
+              <div><i class="bx bxs-discount me-1 font-22 text-primary"></i></div>
+              <h5 class="mb-0 text-primary">
+                {{ mode == "Add" ? "Discount" : "Edit Discount" }}
+              </h5>
+            </div>
+
+            <form class="row g-3" [formGroup]="addDiscountForm" (submit)="addDiscount()">
+              <div class="col-md-12">
+                <label for="title" class="form-label">Title*</label>
+                <div class="input-group">
+                  <input type="text" maxlength="30" class="form-control" placeholder="Discount Title"
+                    formControlName="title" />
+                  <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                    <div *ngIf="f.title.errors.required">Title is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="discountType" class="form-label">Discount Type *</label>
+                <div class="input-group">
+                  <select class="form-control" formControlName="discountType">
+                    <option value="">--Choose--</option>
+                    <option value="Discount Based">Discount Based</option>
+                    <option value="Amount Based">Amount Based</option>
+                  </select>
+                  <div *ngIf="submitted && f.discountType.errors" class="invalid-feedback">
+                    <div *ngIf="f.discountType.errors.required">
+                      Discount Type is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="discount" class="form-label">Discount/Amount *</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" placeholder="Amount"
+                    formControlName="discount" />
+                  <div *ngIf="submitted && f.discount.errors" class="invalid-feedback">
+                    <div *ngIf="f.discount.errors.required">
+                      Discount/Amount is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="couponName" class="form-label">Coupon Name</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Coupon Name"
+                    formControlName="couponName" />
+                  <div *ngIf="submitted && f.couponName.errors" class="invalid-feedback">
+                    <div *ngIf="f.couponName.errors.required">
+                      Coupon Name is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="couponCode" class="form-label">Coupon Code</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Coupon Code"
+                    formControlName="couponCode" />
+                  <div *ngIf="submitted && f.couponCode.errors" class="invalid-feedback">
+                    <div *ngIf="f.couponCode.errors.required">
+                      Coupon Code is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="limit" class="form-label">Limit (none or 0 will be unlimited)</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" placeholder="Number of Usage"
+                    formControlName="limit" />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="validTill" class="form-label">Valid Till (No Date means Lifetime Validity)</label>
+                <!-- <input type="date" class="form-control" formControlName="validTill" /> -->
+                <app-calendar  formControlName="validTill"></app-calendar>
+              </div>
+
+              <div class="col-md-12 mt-3 text-right">
+                <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                  {{ mode == "Edit" ? "Update" : "Save" }}
+                  <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                    aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

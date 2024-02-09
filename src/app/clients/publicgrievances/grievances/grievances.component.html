@@ -1,0 +1,59 @@
+<div class="card radius-15">
+  <div class="card-body">
+    <div class="card-title ps-3"  >
+      <div class="row">
+        <div class="col-9"><h4 class="mb-0">Grievances</h4></div>
+        <div class="col-3 ms-auto">
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="card border-top border-0 border-4 border-primary">
+      <div class="card-body">
+        <table class="table table-striped" width="1--%">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Date</th>
+              <th scope="col">Department</th>
+              <th scope="col">Name</th>
+              <th scope="col">Urgency</th>
+              <th scope="col">Address</th>
+              <th scope="col">Summary</th>
+              <th scope="col">Query Type</th>
+              <th scope="col">Query Ask</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let grievance of grievances;">
+              <td (click)="viewFile(grievance.fileId)" class="cursor-pointer">{{grievance?.queryId || ''}}</td>
+              <td>{{grievance?.createdAt |  dateformat :'MMM DD YYYY hh:mm A' }}</td>
+              <td>{{grievance?.concernedDepartment|| ''}}</td>
+              <td>{{grievance?.Name|| ''}}</td>
+              <td><div [style.backgroundColor]="grievance?.Category" class="urgency-type mt-1 mx-auto"></div></td>
+               <td>{{grievance?.address|| ''}}</td>
+               <td ><span class="message-overflow-class d-flex "><div >{{grievance?.querySummary|| ''}}</div><app-popover [content]="grievance?.querySummary|| ''"></app-popover></span></td>
+               <td>{{grievance?.queryType|| ''}}</td>
+               <td><span class="message-overflow-class d-flex "><div >{{grievance?.queryAsk|| ''}}</div><app-popover [content]="grievance?.queryAsk|| ''"></app-popover></span></td>
+               <td><select class="form-select form-select form-select-sm" [(ngModel)]="grievance.status">
+                <option *ngFor="let option of status" [value]="option.value">{{ option.name }}</option>
+              </select></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="grievances?.length > 0" class="row justify-content-center m-0 pt-3">
+          <div class="col-auto d-flex justify-content-center text-center">
+              <ngb-pagination (pageChange)="getTarnscribedFiles($event)" [pageSize]="pageSize"
+                  [(page)]="page" [maxSize]="5" [rotate]="true" [collectionSize]="collectionSize"
+                  [boundaryLinks]="true">
+              </ngb-pagination>
+          </div>
+        </div>
+</div>
+</div>
+ 
+  </div>
+</div>
+

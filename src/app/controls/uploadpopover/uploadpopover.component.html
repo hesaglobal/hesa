@@ -1,0 +1,33 @@
+<!-- <i class="bx bx-show text-primary pl-3 cursor-pointer" [ngbPopover]="popContent"
+  [popoverTitle]="title">
+</i> -->
+<button type="button" class="btn btn-primary text-white  px-3" [ngbPopover]="popContent"
+[popoverTitle]="title" #p="ngbPopover" [autoClose]="false" triggers="manual" (click)="p.open()"><i class="bx bx-cloud-upload mr-1"></i>Upload File</button>
+<ng-template #popContent>
+  <div class="custom-popover-content">
+  <form class="row g-3" [formGroup]="addFileForm" (submit)="onSubmit()">
+
+    <div class="col-md-12">
+      <label for="uploadFile" class="form-label">Upload file *</label>
+      <div class="input-group">   
+          <app-upload-audio formControlName="file" [maxLimit]="maxLimit" [className]="'rectangle'" [allowedDuration]="allowedDuration"></app-upload-audio>
+          <div *ngIf="submitted && f.file.errors" class="invalid-feedback">
+            <div *ngIf="f.file.errors.required">This field is required
+            </div>
+          </div>
+         
+      </div>
+    </div>
+   
+
+    <div class="col-md-12 my-3 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary text-white popover_btn" [disabled]="dataServices.isAPICalling">
+        <span>Upload</span>
+        <!-- <span *ngIf="dataServices.isAPICalling" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> -->
+      <!-- <span *ngIf="dataServices.isAPICalling">Processing</span> -->
+      </button>
+      <button type="reset" class="btn btn-danger text-white popover_btn" (click)="p.close()" [disabled]="dataServices.isAPICalling">Close</button>
+    </div>
+  </form>
+  </div>
+</ng-template>

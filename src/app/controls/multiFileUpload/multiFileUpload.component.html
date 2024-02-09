@@ -1,0 +1,8 @@
+<app-preloader [hidePreLoader]="hidePreLoader"></app-preloader>
+  <div class="innve">
+  <input type="file"  (change)="onFileChange($event)" class="image-width form-control"
+   placeholder="Upload category icon" webkitdirectory moirectory msdirectory odirectory multiple directory />
+   <!-- <button  (click)="uploadFile($event)" [class]="onUpload? 'btn btn-primary text-white px-3' : 'btn btn-primary text-white px-3 disabled-button'">Upload</button> -->
+   <button  (click)="onProcess($event)" [class]="process ? 'btn btn-primary text-white px-3' :'btn btn-primary text-white px-3 disabled-button'">Process</button>
+</div>
+

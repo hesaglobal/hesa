@@ -1,0 +1,65 @@
+<div class="card radius-15">
+  <div class="card-body">
+    <div class="card-title ps-3">
+      <div class="row">
+        <div class="col-9">
+          <h4 class="mb-0">Orders</h4>
+        </div>
+        <div class="col-3 ms-auto">
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="card border-top border-0 border-4 border-primary">
+      <div class="card-body">
+        <table class="table table-striped" width="1--%">
+          <thead>
+            <tr>
+              <th class="w-10" scope="col">Order Id</th>
+              <th class="w-30" scope="col">Customer Name</th>
+              <th  class="w-5"scope="col">Contact</th>
+              <th  class="w-10" scope="col">Amount</th>
+              <th  class="w-10" scope="col">Amount Paid</th>
+              <th class="w-20" scope="col">Date</th>
+              <th class="w-10" scope="col">Order Status</th>
+              <th class="w-5 text-center" scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders;index as i">
+              <td class="cursor-pointer w-10"><a [routerLink]="['../transcribe', order.fileId]">{{order.orderId||'View'}}</a>
+              </td>
+              <td class="w-30" >{{order.name}}</td>
+              <td class="w-5">{{order.contact}}</td>
+              <td class="w-10">{{order.total||0}}</td>
+              <td class="w-10">{{order.amountpaid||0}}</td>
+              <td class="w-20">{{order.createdAt | dateformat :'MMM DD YYYY hh:mm A' }}</td>
+              <td class="w-10">{{order.orderStatus}}</td>
+              <td class="col-1 text-end">
+                <div class="d-flex order-actions ">
+                  <button class="btn btn-success text-white" (click)="processOrderById(order)" [disabled]="dataServices.isAPICalling && order.processing"  *ngIf="!order.matched">
+                      Process
+                    <span *ngIf="dataServices.isAPICalling && order.processing" class="spinner-grow spinner-grow-sm" role="status"
+                      aria-hidden="true"></span>
+                  </button>
+                  <div class="spinner-border text-primary" role="status" *ngIf="dataServices.isAPICalling && item===order._id">
+                  </div>
+                  <i *ngIf="!(dataServices.isAPICalling&&order._id==item)&&order.matched===true" class='bx bx-receipt action-btn text-danger text-center cursor-pointer box-icon-size ' (click)="downloadReceipt(order._id)"></i>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="orders?.length > 0" class="row justify-content-center m-0 pt-3">
+          <div class="col-auto d-flex justify-content-center text-center">
+            <ngb-pagination (pageChange)="getOrders($event)" [pageSize]="pageSize" [(page)]="page" [maxSize]="5"
+              [rotate]="true" [collectionSize]="collectionSize" [boundaryLinks]="true">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

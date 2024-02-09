@@ -1,0 +1,7 @@
+
+<ng-container>
+  <input type="file" [accept]="accept" [multiple]="(maxLimit>1)" (change)="onFileChange($event)"
+  class="form-control" [placeholder]="placeholder"/>
+</ng-container>
+<div *ngIf="hasError" class="text-danger py-1">{{errorMsg}}</div>
+

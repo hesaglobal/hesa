@@ -1,0 +1,113 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Transcribe</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-primary"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Transcripted Content</li>
+      </ol>
+
+    </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="tab-content" id="danger-pills-tabContent">
+
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+
+               <div class="row">
+
+                 <div class="col-6 ">
+                   <label class="text-capitalize mt-1"  *ngIf="fileName"><b class="filename-font">File :</b> {{fileName}}</label>
+                  <audio controls *ngIf="audioSrc" class="mt-2">
+                  <source [src]="audioSrc" type="audio/mpeg">
+                </audio>
+                </div>
+                <div class="col-4 my-auto">
+                </div>
+                <div class="col-2 my-auto">
+                <select class="form-select" (change)="onLanguageChange($event)" [(ngModel)]="lang">
+                  <option value="">Choose Language</option>
+                  <option [value]="language.value" *ngFor="let language of availableLanguages">{{language.name}}</option>
+                </select>
+              </div>
+                 <div class="col-6 transcribed-content-non-edit" [innerText]="content||''"></div>
+
+                 <div class="col-6">
+                  <div class="form-group">
+                    <b>Transcribed Content</b>
+                    <a class="position-relative audio_right"  role="button">
+                      <i class='bx bx-copy bx-sm' (click)="copyToClipBoard(content)"></i>
+                    </a>
+                    <div class="form-group mt-1">
+                      <textarea class="form-control rounded-0" id="textarea-field" rows="4" [value]="newcontent||''" (input)="onContentChange($event)"></textarea>
+                    </div>
+                  <div *ngIf="submitted" class="invalid-feedback">
+                    <div>Content should be valid</div>
+                  </div>
+                  </div>
+                  <div class="col-md-12 my-3 text-right">
+                    <button class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling" (click)="onSubmit()">
+                      Update
+                      <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                        aria-hidden="true"></span>
+                    </button>
+                  </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+      <div class="tab-content" id="danger-pills-tabContent" *ngIf="addtionalFields">
+
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+              <table class="table table-striped" width="1--%">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col"  *ngIf="addtionalFields?.queryId">Query Id</th> -->
+                    <th scope="col"  *ngIf="addtionalFields?.Nature">Type</th>
+                    <th scope="col"  *ngIf="addtionalFields?.createdAt">Date</th>
+                    <th scope="col"  *ngIf="addtionalFields?.concernedDepartment">Department</th>
+                    <th scope="col"  *ngIf="addtionalFields?.Name">Name</th>
+                    <th scope="col"  *ngIf="addtionalFields?.phoneNo">Phone No</th>
+                    <th scope="col"  *ngIf="addtionalFields?.address">Address</th>
+                    <th scope="col"  *ngIf="addtionalFields?.Message">Message</th>
+                    <th scope="col"  *ngIf="addtionalFields?.Quantity">Quantity</th>
+                    <th scope="col"  *ngIf="addtionalFields?.productType">Product</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td *ngIf="addtionalFields?.queryId">{{addtionalFields?.queryId}}</td>
+                    <td *ngIf="addtionalFields?.createdAt">{{addtionalFields?.createdAt |  dateformat :'MMM DD YYYY hh:mm A' }}</td>
+                    <td *ngIf="addtionalFields?.concernedDepartment">{{addtionalFields?.concernedDepartment}}</td>
+                    <td *ngIf="addtionalFields?.Name">{{addtionalFields?.Name}}</td>
+                    <td *ngIf="addtionalFields?.phoneNo">{{addtionalFields?.phoneNo}}</td>
+                     <td *ngIf="addtionalFields?.address">{{addtionalFields?.address}}</td>
+                     <td *ngIf="addtionalFields?.Message" ><span class="message-overflow-class d-flex"><div >{{addtionalFields?.Message}}</div><app-popover [content]="addtionalFields?.Message"></app-popover></span></td>
+                     <td *ngIf="addtionalFields?.Quantity">{{addtionalFields?.Quantity}}</td>
+                     <td *ngIf="addtionalFields?.productType">{{addtionalFields?.productType}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>
+</div>

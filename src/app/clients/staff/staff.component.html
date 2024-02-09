@@ -1,0 +1,49 @@
+<div class="card radius-15">
+    <div class="card-body">
+      <div class="card-title ps-3"  >
+        <div class="row">
+          <div class="col-9"><h4 class="mb-0">Staff</h4></div>
+          <div class="col-3 ms-auto text-end">
+            <button class="btn btn-primary text-white  px-3"  [routerLink]="['/client/staff/add']">
+                <i class="bx bx-plus-circle mr-1" ></i>
+                Add Staff</button>
+          </div>
+        </div>
+      </div>
+      <hr>
+    <table class="table table-striped" width="1--%">
+        <thead>
+          <tr>
+            <th scope="col" >Name</th>
+            <th scope="col" >Contact Number</th>
+            <th scope="col" >Contact Email</th>
+            <th scope="col" >Designation</th>
+            <th scope="col" >Department</th>
+            <th scope="col" class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let staff of staffs;">
+           <td>{{ staff.name }}</td>
+           <td>{{ staff.phoneNo }}</td>
+           <td>{{ staff.email }}</td>
+           <td>{{ staff.designation}}</td>
+           <td>{{staff.departmentNames||NA}}</td>
+           <td>
+            <i class='bx bxs-edit-alt box-icon-size text-primary' (click)="edit(staff._id)"></i>
+            <i class='bx bxs-trash  box-icon-size text-danger' (click)="delete(staff._id,staff.name)"></i>
+           </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="staffs?.length > 0" class="row justify-content-center m-0 pt-3 ">
+        <div class="col-auto d-flex justify-content-center text-center">
+            <ngb-pagination (pageChange)="getStaffs($event)" [pageSize]="pageSize"
+                [(page)]="page" [maxSize]="5" [rotate]="true" [collectionSize]="collectionSize"
+                [boundaryLinks]="true">
+            </ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+

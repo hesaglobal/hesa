@@ -1,0 +1,94 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Package</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item">
+          <a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt text-primary"></i></a>
+        </li>
+
+        <li class="breadcrumb-item active" aria-current="page">
+          {{ mode }} Package
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div class="ms-auto">
+    <button [routerLink]="['/admin/setting/package']" class="btn btn-primary px-5 text-white">
+      <i class="bx bx-hive mr-1"></i>View Packages
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="tab-content" id="danger-pills-tabContent">
+      <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+        <div class="card border-top border-0 border-4 border-primary">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-center">
+              <div><i class="bx bxs-offer me-1 font-22 text-primary"></i></div>
+              <h5 class="mb-0 text-primary">
+                {{ mode == "Add" ? "Package" : "Edit Package" }}
+              </h5>
+            </div>
+
+            <form class="row g-3" [formGroup]="addPackageForm" (submit)="addPackage()">
+              <div class="col-md-12">
+                <label for="title" class="form-label">Title*</label>
+                <div class="input-group">
+                  <input type="text" maxlength="30" class="form-control" placeholder="Package Title"
+                    formControlName="title" />
+                  <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                    <div *ngIf="f.title.errors.required">Title is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="coins" class="form-label">Coins *</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" placeholder="Number of Coins"
+                    formControlName="coins" />
+                  <div *ngIf="submitted && f.coins.errors" class="invalid-feedback">
+                    <div *ngIf="f.coins.errors.required">
+                      Coins is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="amount" class="form-label">Amount *</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" placeholder="Amount"
+                    formControlName="amount" />
+                  <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+                    <div *ngIf="f.amount.errors.required">
+                      Amount is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <app-daterange formControlName="dateRange"></app-daterange>
+              <div *ngIf="submitted && f.dateRange.errors" class="invalid-feedback">
+                <div *ngIf="f.dateRange.errors.required">Please select from and to date
+                </div>
+              </div>
+
+              <div class="col-md-12 mt-3 text-right">
+                <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                  {{ mode == "Edit" ? "Update" : "Save" }}
+                  <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                    aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

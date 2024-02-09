@@ -1,0 +1,232 @@
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Transcribe</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-primary"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Transcripted Content</li>
+      </ol>
+
+    </nav>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="tab-content" id="danger-pills-tabContent">
+
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+
+               <div class="row">
+
+                 <div class="col-6 ">
+                   <label class="text-capitalize mt-1"  *ngIf="fileName"><b class="filename-font">File :</b> {{fileName}}</label>
+                  <audio controls *ngIf="audioSrc" class="mt-2">
+                  <source [src]="audioSrc" type="audio/mpeg">
+                </audio>
+                </div>
+                <div class="col-4 my-auto">
+                </div>
+                <div class="col-2 my-auto">
+
+                <select class="form-select" (change)="onLanguageChange($event)" [(ngModel)]="lang">
+                  <option value="">Choose Language</option>
+                  <option [value]="language.value" *ngFor="let language of availableLanguages">{{language.name}}</option>
+                </select>
+              </div>
+                 <div class="col-6 transcribed-content-non-edit" [innerText]="content||''"></div>
+
+                 <div class="col-6">
+                  <div class="form-group">
+                    <b>Transcribed Content</b>
+                    <a class="position-relative audio_right"  role="button">
+                      <i class='bx bx-copy bx-sm' (click)="copyToClipBoard(content)"></i>
+                    </a>
+                    <div class="form-group mt-1">
+                      <textarea class="form-control rounded-0" id="textarea-field" rows="4" [value]="newcontent||''" (input)="onContentChange($event)"></textarea>
+                    </div>
+                  <div *ngIf="submitted" class="invalid-feedback">
+                    <div>Content should be valid</div>
+                  </div>
+                  </div>
+                  <div class="col-md-12 my-3 text-right">
+                    <button class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling" (click)="onSubmit()">
+                      Update
+                      <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                        aria-hidden="true"></span>
+                    </button>
+                  </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="card radius-15" *ngIf="personType==='Employer'">
+    <div class="card-body">
+      <div class="card-title ps-3"  >
+        <div class="row">
+          <div class="col-9"><h4 class="mb-0">Matched Candidates</h4></div>
+          <div class="col-3 ms-auto">
+            <button class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling" (click)="rematchCandidates()">
+              Rematch
+              <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      
+  <div class="card border-top border-0 border-4 border-primary">
+        <div class="card-body">
+          <div *ngIf="matchedCandidates.length===0">
+            Sorry,No Candidates Found!
+          </div>
+          <table class="table table-responsive table-striped" width="1--%" *ngIf="matchedCandidates.length>0">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Category</th>
+                <th scope="col">Date</th>
+                <th scope="col">Address</th>
+                <th scope="col">Message</th>
+                <th scope="col">Instruction</th>
+                <th scope="col">Matching Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let candidate of matchedCandidates;">
+                <td>{{ candidate?.Name || 'NA'}}</td>
+                <td>{{ candidate?.contact || 'NA'}}</td>
+                <td>{{candidate?.category|| ''}}</td>
+                <td >{{candidate?.createdAt |  dateformat :'MMM DD YYYY hh:mm A' }}</td>
+                 <td class="text-break text-wrap">{{ candidate?.address?.locationName|| 'NA'}}</td>
+                 <td ><span class="message-overflow-class d-flex "><div >{{candidate?.Message|| ''}}</div><app-popover [content]="candidate.Message|| ''"></app-popover></span></td>
+                 <td>{{candidate?.instruction|| ''}}</td>
+                 <td>
+                 {{candidate?.matchingScore||0}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
+
+    </div>
+  </div>
+  <div class="card radius-15" *ngIf="personType==='Candidate'">
+    <div class="card-body">
+      <div class="card-title ps-3"  >
+        <div class="row">
+          <div class="col-9"><h4 class="mb-0">Matched Jobs</h4></div>
+          <div class="col-3 ms-auto">
+            <button class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling" (click)="rematchJobs()">
+              Rematch
+              <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <div class="card border-top border-0 border-4 border-primary" >
+        <div class="card-body" >
+          <div *ngIf="matchedJobs.length===0">
+            Sorry,No Jobs Found!
+          </div>
+          <table class="table table-responsive table-striped" width="1--%" *ngIf="matchedJobs.length>0">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Category</th>
+                <th scope="col">Date</th>
+                <th scope="col">Address</th>
+                <th scope="col">Message</th>
+                <th scope="col">Instruction</th>
+                <th scope="col">Matching Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let job of matchedJobs;">
+                <td>{{ job?.Name || 'NA'}}</td>
+                <td>{{ job?.contact || 'NA'}}</td>
+                <td>{{job?.category|| ''}}</td>
+                <td >{{job?.createdAt |  dateformat :'MMM DD YYYY hh:mm A' }}</td>
+                 <td class="text-break text-wrap">{{ job?.address?.locationName|| 'NA'}}</td>
+                 <td ><span class="message-overflow-class d-flex "><div >{{job?.Message|| ''}}</div><app-popover [content]="job.Message|| ''"></app-popover></span></td>
+                 <td>{{job?.instruction|| ''}}</td>
+                 <td>
+                 {{job?.matchingScore||0}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
+
+    </div>
+  </div>
+<div class="tab-content" id="danger-pills-tabContent" *ngIf="addtionalFields">
+
+  <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+    <div class="card border-top border-0 border-4 border-primary">
+      <div class="card-body">
+        <div class="d-block" *ngIf="addtionalFields?.Name">
+          <b>Name:</b>
+          <div class="d-inline">
+            <app-inlineedit title="Edit Name" [doneAction]="updateResult" [item]="{key:'Name', value:addtionalFields?.Name}"></app-inlineedit>
+          </div>
+        </div>
+        <div class="d-block" *ngIf="addtionalFields?.jobType">
+          <b>Type:</b>
+          <div class="d-inline">
+            <app-inlineedit title="Edit Type" [doneAction]="updateResult" [item]="{key:'jobType', value:addtionalFields?.jobType}"></app-inlineedit>
+
+          </div>
+        </div>
+        <div class="d-block" *ngIf="addtionalFields?.personType">
+          <b>Category:</b>
+          <div class="d-inline">
+            <app-inlineedit title="Edit Category" [doneAction]="updateResult" [item]="{key:'personType', value:addtionalFields?.personType}"></app-inlineedit>
+
+          </div>
+        </div>
+
+        <div class="d-block" *ngIf="addtionalFields?.address">
+          <b>Location:</b>
+          <div class="d-inline">
+            <app-inlineedit title="Edit Location" [doneAction]="updateResult" [item]="{key:'address', value:addtionalFields?.address}"></app-inlineedit>
+
+          </div>
+        </div>
+        <div class="d-block" *ngIf="addtionalFields?.instruction">
+          <b>Instructions:</b>
+          <div class="d-inline">
+            <app-inlineedit title="Edit Instructions" controltype="textarea" [doneAction]="updateResult" [item]="{key:'instruction', value:addtionalFields?.instruction}"></app-inlineedit>
+          </div>
+        </div>
+        <div class="d-block" *ngIf="addtionalFields?.Message">
+          <b>Message:</b>
+          <div class="d-inline">
+            <app-inlineedit title="Edit Message" controltype="textarea" [doneAction]="updateResult" [item]="{key:'Message', value:addtionalFields?.Message}"></app-inlineedit>
+          </div>
+        </div>
+
+
+  </div>
+</div>
+</div>
+</div>

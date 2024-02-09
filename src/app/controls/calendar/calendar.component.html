@@ -1,0 +1,5 @@
+<div class="input-group">
+  <input class="form-control" [value]="selectValue|ngbdateformat" (dateSelect)="onDateSelection($event)" [placeholder]="placeholder" ngbDatepicker #d="ngbDatepicker">
+  <button class="btn btn-outline-primary bx bx-calendar-star" (click)="d.toggle()" type="button"></button>
+  <!-- <i class="fadeIn animated bx bx-calendar-star bx-md cal" (click)="d.toggle()" type="button"></i> -->
+</div>

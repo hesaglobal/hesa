@@ -1,0 +1,9 @@
+<i class="bx bx-show text-primary pl-3 cursor-pointer" [ngbPopover]="popContent" triggers="mouseenter:mouseleave"
+  [popoverTitle]="title">
+</i>
+<ng-template #popContent let-greeting="greeting">
+  <img
+  [src]="baseUrl + content"
+  width="200px"
+  height="140px">
+</ng-template>

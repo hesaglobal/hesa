@@ -1,0 +1,68 @@
+<div class="card radius-15">
+  <div class="card-body">
+    <div class="card-title ps-3">
+      <div class="row">
+        <div class="col-9">
+          <h4 class="mb-0">Category</h4>
+        </div>
+        <div class="col-3 text-end">
+          <button class="btn btn-primary text-white  px-3" (click)="showPopup()">
+            <i class="bx bx-plus-circle mr-1"></i>
+            Add Category</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <table class="table table-striped" width="1--%">
+      <thead>
+        <tr>
+          <th scope="col" width="10%">Date / Time</th>
+          <th scope="col" width="60%">Name</th>
+          <th scope="col" width="12%">Status</th>
+          <th scope="col" width="12%" class="text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories;index as i">
+          <td class="text-capitalize align-middle my-auto">{{category.createdAt | dateformat :'MMM DD YYYY hh:mm A' }}</td>
+          <td class="text-capitalize align-middle my-auto">{{category.name}}</td>
+          <td class="text-capitalize align-middle my-auto">{{category.status?'Active':'Inactive'}}</td>
+          <td  class="text-capitalize my-auto align-middle actions-div text-end">
+
+              <a href="javascript:" class="margin-right-del align-middle cursor-pointer" (click)="editItem(category)"><i
+                class="text-primary fadeIn animated bx bxs-edit-alt box-icon-size text-primary"></i></a>
+           
+            <a href="javascript:" class="margin-right-del align-middle del-btn-div cursor-pointer" (click)="removeItem(category)"><i
+              class="text-danger fadeIn animated bx bxs-trash box-icon-size"></i></a>
+          </td>
+          <!-- <td  class="text-end">
+            <i (click)="editItem(category)" class='bx bxs-edit-alt text-primary'></i>
+            <i (click)="removeItem(category)" class='bx bxs-trash  text-danger'></i>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="categories?.length > 0" class="row justify-content-center m-0 pt-3">
+      <div class="col-auto d-flex justify-content-center text-center">
+        <ngb-pagination (pageChange)="getCategories($event)" [pageSize]="pageSize" [(page)]="page" [maxSize]="5"
+          [rotate]="true" [collectionSize]="collectionSize" [boundaryLinks]="true">
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-popup title="Add Category" [popupAction]="popupAction">
+  <form [formGroup]="categoryForm">
+    <div class="py-3">
+      <label for="addCategory" class="form-label">Category Name*</label>
+      <div class="input-group ">
+        <input type="text" formControlName="name" class="form-control" />
+      </div>
+    </div>
+
+  </form>
+  <div class="action text-right">
+    <button type="submit" class="btn btn-primary text-white  px-3" (click)="addCategory()">Save</button>
+  </div>
+</app-popup>

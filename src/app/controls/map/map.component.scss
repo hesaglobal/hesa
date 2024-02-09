@@ -1,0 +1,167 @@
+:host {
+    padding: 0!important;
+    height: 100%;
+  }
+  agm-map {
+    width: 100%;
+    height: 100vh;
+    display: block;
+  }
+
+  /* first card start */
+
+.rectangle {
+  display: flex;
+  width: 300px;
+  height: 230px;
+  background-color: #ccc;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 15px;
+  width: 300px; /* Set the width of the rectangle */
+    height: 200px; /* Set the height of the rectangle */
+  background-color: #ccc; /* Set the background color */
+  filter: drop-shadow(4px 6.928px 2.5px rgba(0,0,0,0.13));
+  background-image: linear-gradient(166deg, #0b72ff 0%, #5a08f2 100%);
+  position: relative;
+}
+
+.text {
+  display: flex;
+  background-color: #ffff;
+  justify-content: center;
+  font-size: 20px;
+  color: #2d44f9;
+  font-weight: 600;
+  font-family: "Roboto";
+  text-align: center;
+}
+
+.triangle-down {
+width: 0;
+height: 0;
+border-left: 13px solid transparent;
+border-right: 20px solid transparent;
+border-top: 40px solid #530df5;
+}
+.text-top{
+  background-color: #530df5;
+  font-size: 17px!important;
+}
+.formal-site{
+  font-size: 17px!important;
+}
+.view-btn{
+  font-size: 14px!important;
+}
+.view-bot{
+  background-color: #530df5;
+}
+.gm-style-iw{
+  padding: 25%;
+}
+.gm-style-iw-d{
+  padding: 0!important;
+}
+.gm-style-iw-c{
+  background-color: red!important;
+}
+.gm-style-iw{
+  background-color: red!important;
+}
+.gm-style-iw.gm-style-iw-c{
+  background-color: red!important;
+
+}
+.close-item {
+  position: absolute; /* Set the positioning context */
+  top: 99%; /* Adjust the top position as desired */
+  right: 44%; /* Adjust the right position as desired */
+}
+.gm-style-iw-d {
+  overflow: hidden!important;
+}
+.gm-style-iw.gm-style-iw-c {
+  padding: 0px;
+  background: transparent;
+  box-shadow: none;
+}
+.text-top{
+      display: flex;
+      justify-content: center;
+      font-size: 20px;
+      letter-spacing: 0px;
+      line-height: 20px;
+      color: #ffffff;
+      font-weight: 500;
+      font-family: "Roboto";
+      text-align: center;
+}
+
+
+.view-btn{
+  display: flex;
+  justify-content: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-radius: 4px;
+background-color: #8fe61d;
+font-size: 16px;
+font-weight: 700;
+}
+
+.view-btn:hover{
+  display: flex;
+  justify-content: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-radius: 4px;
+background-color: #ffffff;
+font-size: 16px;
+font-weight: 700;
+}
+
+
+.view-bot{
+  display: flex;
+  justify-content: space-around;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  top: 12px;
+  width: 32px;
+  height: 8px;
+  opacity: 0.3;
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 19px;
+  width: 4px;
+  background-color: #ffffff;
+ 
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}
+
+/* first card end */
+
+.no-btn{
+  background-color: #fd8000;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 7px;
+  border-radius: 2px;
+  color: #ffffff;
+  text-decoration:none;
+}

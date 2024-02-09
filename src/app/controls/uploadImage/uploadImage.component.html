@@ -1,0 +1,12 @@
+
+<ng-container  *ngIf="!displayValue.url; else showimage">
+  <input type="file" accept="image/png, image/jpeg, image/jpg" (change)="onFileChange($event)"
+  class="form-control" placeholder="Upload category icon"/>
+</ng-container>
+<ng-template #showimage>
+  <img [src]="displayValue.url" height="50px" width="50px"  class="{{className}} p-1 bg-primary">
+  <a  class="btn btn-outline-danger" (click)="removeImage()"  style="margin-left:3px;">
+     <i  class="bx bx-trash me-0"></i>
+   </a>
+</ng-template>
+

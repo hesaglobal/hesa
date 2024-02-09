@@ -1,0 +1,132 @@
+<div class="container-">
+  <div class="row-">
+    <div class="col-xl-12-">
+      <div class="row-">
+        <div class="form-group form-primary">
+          <div class="spk_haed">
+          <h6 class="mt-3">Speak Now</h6>
+          <p><i>Describe your product</i></p>
+          </div>
+          <div [class]="audioStarted ? 'chat_box_outer' : 'd-none chat_box_outer'">
+          <div class='sound-wave mt-2'>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+          </div>
+          </div>
+          <div *ngIf="audioURL" class="position-relative mb-3 wd_csm">
+            <audio controls>
+              <source [src]="audioURL" type="audio/wav">
+            </audio>
+            <a class="image_rmv" (click)="recordAgain()">
+              <i class="btn-close me-0"></i>
+            </a>
+          </div>
+          <div class="row-" >
+            <!-- <div class="col-12- mt-4 audio-container-buttons mb-3" *ngIf="audioURL">
+              <button type="button" class="btn btn-primary record-button-margin" (click)="recordAgain()">Record
+                again</button>
+              <button type="button" class="btn btn-primary" (click)="submit()">Add Audio</button>
+            </div> -->
+            <div class="col-12- mt-4">
+              <div class="row- justify-content-center pt-sm-0 pb-3">
+                <div class="speech-container ">
+                  <button [class]="audioStarted ? 'disable-button spk_bt speak_btn mx-2': 'spk_bt speak_btn mx-2'" (click)="startSpeechRecognition()" >Speak
+                    <div class="mic-main d-inline-block">
+                      <div class="waves-block">
+                        <div [class]="isListening ? customClass ? 'waves wave-1':'change waves wave-1' : 'waves wave-1'"></div>
+                        <div [class]="isListening ? customClass ? 'waves wave-2':'change waves wave-2' : 'waves wave-2'"></div>
+                        <div [class]="isListening ? customClass ? 'waves wave-3':'change waves wave-3' : 'waves wave-3'"></div>
+                      </div>
+                      <i class="bx bxs-microphone pl-3 icon-class"></i>
+                    </div>
+                  </button>
+                  <button [class]="audioStopped ? 'disable-button stop_bt speak_btn' : 'stop_bt speak_btn mx-2'" (click)="stopSpeechRecognition()">Stop
+                    <div class="mic-main d-inline-block">
+                      <div class="waves-block">
+                        <div [class]="customClass ? 'waves wave-1 waves-bottom' : 'waves wave-1'"></div>
+                        <div [class]="customClass ? 'waves wave-2 waves-bottom' : 'waves wave-2'"></div>
+                        <div [class]="customClass ? 'waves wave-3 waves-bottom' : 'waves wave-3'"></div>
+                      </div>
+                      <i class="bx bx-stop-circle pl-3 icon-class"></i>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

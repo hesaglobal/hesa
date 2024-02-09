@@ -1,0 +1,104 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Agents</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+              class="bx bx-home-alt text-danger"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{mode}} Services</li>
+      </ol>
+
+    </nav>
+  </div>
+  <div class="ms-auto">
+    <button type="submit" class="btn btn-primary px-5" [routerLink]="['/admin/services/list']"><i class="bx bx-hive mr-1"></i>View
+      Services</button>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-xl-12 mx-auto">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <div class="tab-content" id="danger-pills-tabContent">
+
+              <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+
+                <div class="card border-top border-0 border-4 border-danger">
+                  <div class="card-body p-5">
+                    <div class="card-title d-flex align-items-center">
+                      <div><i class="bx bxs-user me-1 font-22 text-danger"></i> </div>
+                      <h5 class="mb-0 text-danger">{{(mode == 'Add')? 'Add Service' :
+                        'Edit Service'}} </h5>
+                    </div>
+
+                    <form class="row g-3" [formGroup]="serviceForm" (submit)="addService()">
+                      <div class="col-md-6">
+                        <label class="form-label">Name*</label>
+                        <div class="input-group">
+                          <span class="input-group-text bg-transparent">
+                            <i class='bx bxs-user'></i>
+                          </span>
+                          <input type="text" maxlength="30" class="form-control border-start-0"
+                            placeholder="Name" formControlName="name" />
+                          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Name is required
+                            </div>
+                            <div *ngIf="f.name.errors.whitespace && !f.name.errors.required">
+                              Please Enter some text </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Icon Class*</label>
+                        <div class="input-group"> <span class="input-group-text bg-transparent"><i
+                              class='bx bxs-user'></i></span>
+                          <input type="text" maxlength="30" class="form-control border-start-0"
+                            placeholder="Icon Class Name" formControlName="iconClass" />
+                          <div *ngIf="submitted && f.iconClass.errors" class="invalid-feedback">
+                            <div *ngIf="f.iconClass.errors.required">Icon Class is required
+                            </div>
+                            <div *ngIf="f.iconClass.errors.whitespace && !f.iconClass.errors.required">
+                              Please Enter some text </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" placeholder="Enter Address" rows="3"
+                          formControlName="description"></textarea>
+                        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                          <div *ngIf="f.description.errors.minlength">description must have minimum 75 characters
+                          </div>
+                        </div>
+
+                      </div>
+
+
+                      <div class="col-md-12 mt-4">
+                        <button type="submit" class="btn btn-danger px-5" [disabled]="dataservice.isAPICalling">
+                          {{mode=='Edit' ? 'Update Service' : 'Add Service'}}
+                          <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                            aria-hidden="true"></span>
+                        </button>
+
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

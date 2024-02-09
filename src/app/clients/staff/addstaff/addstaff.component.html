@@ -1,0 +1,151 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Staff</div>
+    <div class="ps-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 p-0">
+          <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i
+                class="bx bx-home-alt text-primary"></i></a>
+          </li>
+  
+          <li class="breadcrumb-item active" aria-current="page">{{mode}} Staff</li>
+        </ol>
+  
+      </nav>
+    </div>
+    <div class="ms-auto">
+      <button (click)="viewStaff()" class="btn btn-primary px-5 text-white"><i class="bx bx-hive mr-1"></i>View
+        Staffs</button>
+    </div>
+  
+  </div>
+  
+  <div class="row">
+    <div class="col">
+      <div class="tab-content" id="danger-pills-tabContent">
+  
+        <div class="tab-pane fade show active" id="danger-pills-home" role="tabpanel">
+  
+          <div class="card border-top border-0 border-4 border-primary">
+            <div class="card-body">
+              <div class="card-title d-flex align-items-center">
+                <div><i class="bx bxs-user me-1 font-22 text-primary"></i> </div>
+                <h5 class="mb-0 text-primary">{{(mode == 'Add')? ' Add Staff' :
+                  'Edit Staff'}} </h5>
+              </div>
+  
+              <form class="row g-3" [formGroup]="addStaffForm" (submit)="onSubmit()">
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                  <label for="name" class="form-label">Name*</label>
+                  <div class="input-group">
+                    <input type="text" maxlength="30" class="form-control" placeholder="Name"
+                      formControlName="name" />
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Name is required
+                      </div>
+                  
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <label for="phoneNo" class="form-label">Mobile Number*</label>
+                    <div class="input-group">
+                      <input type="text" maxlength="10" class="form-control" placeholder="Mobile Number" (keypress)="validator.numberOnly($event)"
+                      formControlName="phoneNo" />
+                      <div *ngIf="submitted && f.phoneNo.errors" class="invalid-feedback">
+                        <div *ngIf="f.phoneNo.errors.required">Mobile Number is required
+                        </div>
+                    
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <label for="email" class="form-label">Email*</label>
+                    <div class="input-group">
+                      <input type="text" maxlength="30" class="form-control" placeholder="Email"
+                      formControlName="email" />
+                      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email is required
+                        </div>
+                        <div *ngIf="f['email'].errors['pattern']">
+                            Please enter valid email
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container formGroupName="pwGroup" *ngIf="mode == 'Add'">
+                    <div class="col-md-4">
+                      <label for="password" class="form-label">Password*</label>
+                      <div class="input-group">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+                        <div *ngIf="submitted && pwGroup.controls.password.errors" class="invalid-feedback">
+                          <div *ngIf="pwGroup.controls.password.errors.required">Password is required
+                          </div>
+                          <div *ngIf="pwGroup.controls.password.errors.minlength && !pwGroup.controls.password.errors.required">
+                            Password must be minimum of 6 characters </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="confirmpassword" class="form-label">Confirm Password*</label>
+                      <div class="input-group">
+                        <input type="password" class="form-control" placeholder="Confirm Password"
+                          formControlName="confirmpassword" />
+                          <div *ngIf="submitted && f.pwGroup.errors?.passwordNotMatch" class="invalid-feedback">
+                            <div>Password and confirm password should match
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <label for="designation" class="form-label">Designation*</label>
+                    <div class="input-group">
+                      <input type="text" maxlength="30" class="form-control" placeholder="Designation"
+                        formControlName="designation" />
+                      <div *ngIf="submitted && f.designation.errors" class="invalid-feedback">
+                        <div *ngIf="f.designation.errors.required">Designation is required
+                        </div>
+                    
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <label for="joiningDate" class="form-label">Joining Date</label>
+                    <div class="input-group">
+                      <input type="date" class="form-control" placeholder="Joining Date"
+                        formControlName="joiningDate" />
+                    </div>
+                  </div>
+                  <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                    <label for="title" class="form-label">Associated Department*</label>
+                    <div class="input-group">
+                      <app-multiselect style="width:100%" formControlName="department"  [defaultvalue]="departments" [list]="department" [placeholder]="'Select Departments'"></app-multiselect>
+                      <div *ngIf="submitted && f.department.errors" class="invalid-feedback">
+                        <div *ngIf="f.department.errors.required">Department  is required
+                        </div>
+                      </div>
+    
+                    </div>
+                  </div>
+    
+               
+  
+                <div class="col-md-12 my-3 text-right">
+                  <button type="submit" class="btn btn-primary text-white px-5" [disabled]="dataservice.isAPICalling">
+                    {{mode=='Edit' ? 'Update' : 'Save'}}
+                    <span *ngIf="dataservice.isAPICalling" class="spinner-grow spinner-grow-sm" role="status"
+                      aria-hidden="true"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
